@@ -1,0 +1,18 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+configparser = "*"
+image = "*"
+pillow = "*"
+opencv-python = "*"
+pytesseract = "*"
+pypiwin32 = "*"
+pyautogui = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"
