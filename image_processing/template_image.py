@@ -8,7 +8,7 @@ from write_nicknames import write_nicknames_to_csv
 
 
 def base_params_of_letters():
-    image_folder = r'C:\Users\mary1\PycharmProjects\WinShellControll\image_for_template'  # todo: temp or config
+    image_folder = r'Q:\PyProjects\WinShellControll\image_for_template'  # todo: temp or config
     images = os.listdir(image_folder)
 
     images_params = []
@@ -35,9 +35,9 @@ def check_color(image, x, y, color) -> bool:
 
 
 def prepare_for_templates():
-    image_folder = r'C:\Users\mary1\PycharmProjects\WinShellControll\result_images'  # todo: to config
+    image_folder = r'Q:\PyProjects\WinShellControll\result_images'  # todo: to config
 
-    save_to_folder = r'C:\Users\mary1\PycharmProjects\WinShellControll\image_for_template'  # todo: temp or config
+    save_to_folder = r'Q:\PyProjects\WinShellControll\image_for_template'  # todo: temp or config
     # image_name = os.listdir(image_folder)[5]
     image_names = os.listdir(image_folder)
 
