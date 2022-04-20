@@ -7,24 +7,6 @@ from image_processing.transform_image import crop, crop_by_solid_color
 from write_nicknames import write_nicknames_to_csv
 
 
-def base_params_of_letters():
-    image_folder = r'Q:\PyProjects\WinShellControll\image_for_template'  # todo: temp or config
-    images = os.listdir(image_folder)
-
-    images_params = []
-    for image_name in images:
-        image = load_image(f"{image_folder}\\{image_name}")
-        width, height = image.size
-        images_params.append({
-            "symbol": image_name.split('name')[0],
-            "width": width,
-            "height": height,
-            "white_points": [(0,0), (1,1)],
-            "black_points": [(0,0), (1,1)],
-        })
-    print(json.dumps(images_params))
-
-
 def check_color(image, x, y, color) -> bool:
     width, height = image.size
     if x >= width:
@@ -35,9 +17,8 @@ def check_color(image, x, y, color) -> bool:
 
 
 def prepare_for_templates():
-    image_folder = r'Q:\PyProjects\WinShellControll\result_images'  # todo: to config
+    image_folder = r'C:\Users\mary1\PycharmProjects\WinShellControll\result_images'  # todo: to config
 
-    save_to_folder = r'Q:\PyProjects\WinShellControll\image_for_template'  # todo: temp or config
     # image_name = os.listdir(image_folder)[5]
     image_names = os.listdir(image_folder)
 
