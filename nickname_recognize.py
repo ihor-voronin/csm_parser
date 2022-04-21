@@ -1,14 +1,14 @@
 import os
 import shutil
 
+import cv2
+
 from typing import Tuple
 from config import Config
 from image_processing.load_image import load_image
-from image_processing.save_image import save_image
+from image_processing.save_image import save_image, save_result
 from image_processing.transform_image import crop, crop_by_solid_color
-from neural_network.remove_noise import (
-    otsu_threshold,
-)
+
 
 csv_columns = ["file_name", "recognized_data"]
 csv_file = "result.csv"
@@ -67,6 +67,14 @@ def crop_base_image(image_folder: str, file_name: str) -> Tuple[str, str]:
     return save_image(
         image=cropped, save_folder=f"{base_path_to_save}\\crop_base", name=file_name
     )
+
+
+def otsu_threshold(image_folder: str, file_name: str) -> Tuple[str, str]:
+    # Load image, grayscale, Otsu's threshold
+    image = cv2.imread(f"{image_folder}\\{file_name}")
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+    return save_result(thresh, file_name, "otsu_threshold")
 
 
 def prepare_nicknames() -> None:
