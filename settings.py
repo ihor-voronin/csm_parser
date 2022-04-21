@@ -38,6 +38,18 @@ class Settings:
     name_pattern = "CSM-{name}-{timestamp}"
 
     @classmethod
+    def get_save_screenshot_path(cls) -> str:
+        return join(cls._user_picture_path, cls.folder_save_screenshot)
+
+    @classmethod
+    def get_temp_path(cls) -> str:
+        return join(cls._user_temp_path, cls.folder_save_temp)
+
+    @classmethod
+    def get_save_processed_path(cls) -> str:
+        return join(cls._user_picture_path, cls.folder_save_processed)
+
+    @classmethod
     def _class_variables(cls) -> dict:
         return {
             key: value
