@@ -28,7 +28,6 @@ def main() -> None:
         prepare_for_templates()
 
     if args.clean:
-        # todo: clean all images
         delete_images()
 
 
