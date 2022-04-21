@@ -50,6 +50,11 @@ class Settings:
         return join(cls._user_picture_path, cls.folder_save_processed)
 
     @classmethod
+    def get_save_csv_path(cls) -> str:
+        # todo: ~/Documents or from settings var
+        return cls._user_documents_path
+
+    @classmethod
     def _class_variables(cls) -> dict:
         return {
             key: value

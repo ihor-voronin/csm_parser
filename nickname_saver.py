@@ -39,8 +39,8 @@ def process_page(
 ) -> None:
     # click to center of application
     click(
-        Settings.window_width / 2,
-        Settings.window_height / 2,
+        int(Settings.window_width / 2),
+        int(Settings.window_height / 2),
     )
     # page down for setup init position
     page_down()

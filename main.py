@@ -3,7 +3,6 @@ import argparse
 from image_processing.delete_images import delete_images
 from image_processing.template_image import (
     prepare_for_templates,
-    base_params_of_letters,
 )
 from nickname_recognize import prepare_nicknames, recognize
 from nickname_saver import save_nicknames
@@ -28,8 +27,7 @@ def main() -> None:
     if args.prepare_images:
         prepare_nicknames()
 
-    if args.prepare_templates:
-        # base_params_of_letters()
+    if args.recognize_templates:
         prepare_for_templates()
 
     if args.recognize:
@@ -71,9 +69,9 @@ if __name__ == "__main__":
         action="store_true",
     )
     parser.add_argument(
-        "-pt",
-        "--prepare-templates",
-        help="prepare symbols for templates",
+        "-rt",
+        "--recognize-templates",
+        help="Recognize nicknames by templates method",
         action="store_true",
     )
     parser.add_argument("-w", "--window", type=int, help="id of window to process")
