@@ -3,10 +3,10 @@ import os
 from PIL import Image
 
 from image_processing.save_image import save_image
-from image_processing.screen_shot import screen_shoot
 from image_processing.transform_image import crop
 from progress_bar import progress_bar
 from settings import Settings
+from window_controll.screen_shot import screen_shoot
 from window_controll.window_control import (
     click,
     maximize_window,
