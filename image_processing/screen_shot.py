@@ -1,12 +1,9 @@
-import time
 from typing import Optional
 
 import win32con
 import win32ui
 from PIL import Image
 import win32gui
-
-from config import Config
 
 
 def screen_shoot(window_id: int) -> Optional[Image.Image]:
@@ -16,7 +13,6 @@ def screen_shoot(window_id: int) -> Optional[Image.Image]:
     h = bot - top
 
     win32gui.SetForegroundWindow(window_id)
-    # time.sleep(1.0)
 
     hdesktop = win32gui.GetDesktopWindow()
     hwndDC = win32gui.GetWindowDC(hdesktop)
@@ -45,6 +41,4 @@ def screen_shoot(window_id: int) -> Optional[Image.Image]:
     if result is not None:
         return None
 
-    # im.show()
-    # im.save("test.png")
     return im
