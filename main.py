@@ -1,14 +1,21 @@
 import argparse
 
 from image_processing.delete_images import delete_images
-from image_processing.template_image import prepare_for_templates, base_params_of_letters
+from image_processing.template_image import (
+    prepare_for_templates,
+    base_params_of_letters,
+)
 from nickname_recognize import prepare_nicknames, recognize
 from nickname_saver import save_nicknames
+from settings import Settings
 from window_controll.window_list import list_of_open_windows
 from write_nicknames import write_nicknames_to_csv
 
 
 def main() -> None:
+    if args.payload:
+        print(Settings.settings_payload())
+
     if args.windows_list:
         list_of_open_windows()
 
@@ -35,6 +42,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="user converter",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        "-pl",
+        "--payload",
+        help="Display settings params",
+        action="store_true",
     )
     parser.add_argument(
         "-wl",
