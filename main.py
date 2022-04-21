@@ -13,8 +13,11 @@ from write_nicknames import write_nicknames_to_csv
 
 
 def main() -> None:
-    if args.payload:
-        print(Settings.settings_payload())
+    if args.load_settings:
+        Settings.load_from_json(args.load_settings)
+
+    if args.display_settings:
+        print(Settings.settings_json())
 
     if args.windows_list:
         list_of_open_windows()
@@ -44,10 +47,16 @@ if __name__ == "__main__":
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument(
-        "-pl",
-        "--payload",
+        "-ds",
+        "--display-settings",
         help="Display settings params",
         action="store_true",
+    )
+    parser.add_argument(
+        "-ls",
+        "--load-settings",
+        help="Load settings params",
+        type=str,
     )
     parser.add_argument(
         "-wl",

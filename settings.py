@@ -48,9 +48,21 @@ class Settings:
         }
 
     @classmethod
-    def settings_payload(cls) -> str:
+    def settings_json(cls) -> str:
         return json.dumps(
             cls._class_variables(),
             sort_keys=True,
             indent=4,
         )
+
+    @classmethod
+    def load_from_json(cls, payload: str) -> None:
+        print(payload)
+        payload_dict = json.loads(payload)
+        class_variables = cls._class_variables()
+        for key, value in payload_dict.items():
+            if key not in class_variables.keys():
+                raise Exception(f"Incorrect key '{key}'")
+            if not isinstance(value, type(class_variables[key])):
+                raise Exception(f"Incorrect value type for key '{key}'")
+            setattr(cls, key, value)
