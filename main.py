@@ -1,6 +1,6 @@
 import argparse
 
-from image_processing.delete_images import delete_images
+from image_processing.delete_images import clean_folders
 from image_processing.template_image import prepare_for_templates
 from nickname_recognize import prepare_nicknames
 from nickname_saver import save_nicknames
@@ -28,7 +28,7 @@ def main() -> None:
         prepare_for_templates()
 
     if args.clean:
-        delete_images()
+        clean_folders()
 
 
 if __name__ == "__main__":
@@ -67,9 +67,7 @@ if __name__ == "__main__":
         action="store_true",
     )
     parser.add_argument("-w", "--window", type=int, help="id of window to process")
-    parser.add_argument(
-        "-c", "--clean", action="store_true", help="clean image folder after processing"
-    )
+    parser.add_argument("-c", "--clean", action="store_true", help="Clean used folders")
 
     args = parser.parse_args()
     config = vars(args)

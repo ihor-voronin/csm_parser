@@ -4,7 +4,7 @@ from progress_bar import progress_bar
 from settings import Settings
 
 
-def delete_images() -> None:
+def clean_folders() -> None:
     print("Delete folders with images ...")
     image_folders = [
         Settings.get_temp_path(),
