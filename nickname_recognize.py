@@ -1,7 +1,5 @@
 import os
 import shutil
-import time
-from typing import Dict, List
 
 from typing import Tuple
 from config import Config
@@ -10,10 +8,6 @@ from image_processing.save_image import save_image
 from image_processing.transform_image import crop, crop_by_solid_color
 from neural_network.remove_noise import (
     otsu_threshold,
-    remove_background_bu_mask_v1,
-    remove_background_bu_mask_v2,
-    morph_remove_noise,
-    contours_remove_noise,
 )
 from neural_network.tesseract import recognize_image
 
