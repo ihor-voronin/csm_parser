@@ -39,19 +39,19 @@ if __name__ == "__main__":
     parser.add_argument(
         "-ds",
         "--display-settings",
-        help="Display settings params",
+        help="Display current settings params",
         action="store_true",
     )
     parser.add_argument(
         "-ls",
         "--load-settings",
-        help="Load settings params",
+        help="Load settings params from string in json format",
         type=str,
     )
     parser.add_argument(
         "-wl",
         "--windows-list",
-        help="Display list with available windows",
+        help="List of open windows with their IDs",
         action="store_true",
     )
     parser.add_argument(
