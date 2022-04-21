@@ -6,7 +6,13 @@ from image_processing.save_image import save_image
 from image_processing.screen_shot import screen_shoot
 from image_processing.transform_image import crop
 from settings import Settings
-from window_controll.window_control import click, page_down, set_window_position
+from window_controll.window_control import (
+    click,
+    maximize_window,
+    minimize_window,
+    page_down,
+    set_window_position,
+)
 
 
 def split_screenshot_to_nicknames(
@@ -78,7 +84,19 @@ def process_page(
 
 
 def save_nicknames(window_id: int) -> None:
+    print(
+        """
+Start getting nicknames from the app.
+IMPORTANT!!!
+Do not move the mouse cursor or click until the window is minimized
+    """
+    )
+    try:
+        input("Press Enter to continue...")
+    except SyntaxError:
+        pass
     # set base position for correct processing
+    maximize_window(window_id)
     set_window_position(window_id)
 
     # click to set default position of nicknames
@@ -90,7 +108,7 @@ def save_nicknames(window_id: int) -> None:
 
     count_of_pages = Settings.page_count
     for page_mun in range(count_of_pages - 1):
-        # print(f"process page {page_mun+1}")
+        print(f"Process page {page_mun+1}/{count_of_pages}...")
         # click to reset pgdn position
         click(750, 75)
         process_page(
@@ -103,7 +121,7 @@ def save_nicknames(window_id: int) -> None:
 
         click(860, 211)  # click to next page
 
-    # print(f"process page {count_of_pages}")
+    print(f"Process page {count_of_pages}/{count_of_pages}...")
     process_page(
         page_num=count_of_pages - 1,
         window_id=window_id,
@@ -111,3 +129,6 @@ def save_nicknames(window_id: int) -> None:
         nickname_by_pgdn=nickname_by_pgdn,
         count_nickname_after_pgdn=count_nickname_after_pgdn,
     )
+
+    minimize_window(window_id)
+    print(f"Nicknames saved to {Settings.get_save_screenshot_path()}")
