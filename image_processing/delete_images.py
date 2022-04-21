@@ -15,11 +15,11 @@ def clean_folders() -> None:
         0, len(image_folders), prefix="Progress:", suffix="Complete", length=50
     )
     for num, image_folder in enumerate(image_folders, start=1):
-        progress_bar(
-            num, len(image_folders), prefix="Progress:", suffix="Complete", length=50
-        )
         try:
             shutil.rmtree(image_folder)
         except FileNotFoundError:
             pass
+        progress_bar(
+            num, len(image_folders), prefix="Progress:", suffix="Complete", length=50
+        )
     print("All used folders removed.")

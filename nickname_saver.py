@@ -5,6 +5,7 @@ from PIL import Image
 from image_processing.save_image import save_image
 from image_processing.screen_shot import screen_shoot
 from image_processing.transform_image import crop
+from progress_bar import progress_bar
 from settings import Settings
 from window_controll.window_control import (
     click,
@@ -107,8 +108,8 @@ Do not move the mouse cursor or click until the window is minimized
     full_pgdn_in_last_page = Settings.PgDn_count_in_last_page
 
     count_of_pages = Settings.page_count
+    progress_bar(0, count_of_pages, prefix="Progress:", suffix="Complete", length=50)
     for page_mun in range(count_of_pages - 1):
-        print(f"Process page {page_mun+1}/{count_of_pages}...")
         # click to reset pgdn position
         click(750, 75)
         process_page(
@@ -118,16 +119,24 @@ Do not move the mouse cursor or click until the window is minimized
             nickname_by_pgdn=nickname_by_pgdn,
             count_nickname_after_pgdn=count_nickname_after_pgdn,
         )
-
+        progress_bar(
+            page_mun + 1,
+            count_of_pages,
+            prefix="Progress:",
+            suffix="Complete",
+            length=50,
+        )
         click(860, 211)  # click to next page
 
-    print(f"Process page {count_of_pages}/{count_of_pages}...")
     process_page(
         page_num=count_of_pages - 1,
         window_id=window_id,
         full_pgdn_in_page=full_pgdn_in_last_page,
         nickname_by_pgdn=nickname_by_pgdn,
         count_nickname_after_pgdn=count_nickname_after_pgdn,
+    )
+    progress_bar(
+        count_of_pages, count_of_pages, prefix="Progress:", suffix="Complete", length=50
     )
 
     minimize_window(window_id)

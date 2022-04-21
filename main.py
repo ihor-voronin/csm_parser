@@ -1,7 +1,7 @@
 import argparse
 
 from image_processing.delete_images import clean_folders
-from image_processing.template_image import prepare_for_templates
+from image_processing.template_image import recognize_by_templates
 from nickname_recognize import prepare_nicknames
 from nickname_saver import save_nicknames
 from settings import Settings
@@ -25,7 +25,7 @@ def main() -> None:
         prepare_nicknames()
 
     if args.recognize_templates:
-        prepare_for_templates()
+        recognize_by_templates()
 
     if args.clean:
         clean_folders()
