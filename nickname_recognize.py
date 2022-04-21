@@ -5,7 +5,7 @@ from typing import Dict, List, Tuple
 import cv2
 
 from image_processing.load_image import load_image
-from image_processing.save_image import save_image, save_result
+from image_processing.save_image import save_cv2_image, save_image
 from image_processing.transform_image import crop, crop_by_solid_color
 from progress_bar import progress_bar
 from settings import Settings
@@ -72,7 +72,7 @@ def otsu_threshold(image_folder: str, file_name: str) -> Tuple[str, str]:
     image = cv2.imread(f"{image_folder}\\{file_name}")
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
-    return save_result(thresh, file_name, "otsu_threshold")
+    return save_cv2_image(thresh, file_name, "otsu_threshold")
 
 
 def prepare_nicknames() -> None:

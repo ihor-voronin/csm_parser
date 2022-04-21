@@ -22,7 +22,7 @@ def save_image(image: Image.Image, save_folder: str, name: str) -> Tuple[str, st
     return save_folder, f"{name}"
 
 
-def save_result(result: ndarray, file_name: str, method: str) -> Tuple[str, str]:
+def save_cv2_image(result: ndarray, file_name: str, method: str) -> Tuple[str, str]:
     base_path_to_save = Settings.get_temp_path()
     path_to_save = f"{base_path_to_save}\\{method}"
     file_path = f"{path_to_save}\\{file_name}"
