@@ -21,7 +21,7 @@ def main() -> None:
     if args.window:
         save_nicknames(args.window)
 
-    if args.prepare_images:
+    if args.prepare_nicknames:
         prepare_nicknames()
 
     if args.recognize_templates:
@@ -56,8 +56,8 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "-p",
-        "--prepare-images",
-        help="preprocess images for recognize",
+        "--prepare-nicknames",
+        help="preprocess nicknames for recognize",
         action="store_true",
     )
     parser.add_argument(
