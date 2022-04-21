@@ -1,6 +1,6 @@
 import argparse
 
-from image_processing.delete_images import clean_folders
+from delete_folders import clean_folders
 from image_processing.template_image import recognize_by_templates
 from nickname_recognize import prepare_nicknames
 from nickname_saver import save_nicknames
