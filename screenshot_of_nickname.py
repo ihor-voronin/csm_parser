@@ -84,24 +84,7 @@ def process_page(
     )
 
 
-def save_nicknames(window_id: int) -> None:
-    print(
-        """
-Start getting nicknames from the app.
-IMPORTANT!!!
-Do not move the mouse cursor or click until the window is minimized
-    """
-    )
-    try:
-        input("Press Enter to continue...")
-    except SyntaxError:
-        pass
-    # set base position for correct processing
-    maximize_window(window_id)
-    set_window_position(window_id)
-
-    # click to set default position of nicknames
-    click(165, 211)
+def generate_screenshots(window_id: int) -> None:
     full_pgdn_in_page = Settings.PgDn_count_in_full_page
     nickname_by_pgdn = Settings.PgDn_contain_nickname
     count_nickname_after_pgdn = Settings.PgDn_remain_count_nickname
@@ -109,6 +92,7 @@ Do not move the mouse cursor or click until the window is minimized
 
     count_of_pages = Settings.page_count
     progress_bar(0, count_of_pages, prefix="Progress:", suffix="Complete", length=50)
+
     for page_mun in range(count_of_pages - 1):
         # click to reset pgdn position
         click(750, 75)
@@ -138,6 +122,28 @@ Do not move the mouse cursor or click until the window is minimized
     progress_bar(
         count_of_pages, count_of_pages, prefix="Progress:", suffix="Complete", length=50
     )
+
+
+def create_screenshots_of_nicknames(window_id: int) -> None:
+    print(
+        """
+Start getting nicknames from the app.
+IMPORTANT!!!
+Do not move the mouse cursor or click until the window is minimized
+    """
+    )
+    try:
+        input("Press Enter to continue...")
+    except SyntaxError:
+        pass
+    # set base position for correct processing
+    maximize_window(window_id)
+    set_window_position(window_id)
+
+    # click to set default position of nicknames
+    click(165, 211)
+
+    generate_screenshots(window_id)
 
     minimize_window(window_id)
     print(f"Nicknames saved to {Settings.get_save_screenshot_path()}")
