@@ -9,7 +9,6 @@ from image_processing.transform_image import crop, crop_by_solid_color
 from neural_network.remove_noise import (
     otsu_threshold,
 )
-from neural_network.tesseract import recognize_image
 
 csv_columns = ["file_name", "recognized_data"]
 csv_file = "result.csv"

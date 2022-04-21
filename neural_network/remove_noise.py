@@ -1,8 +1,9 @@
+import os
 from typing import Tuple
 
 import cv2
 
-from neural_network.result_saver import save_result
+from config import Config
 
 
 # todo: move to image processing
@@ -19,4 +20,14 @@ def otsu_threshold(image_folder: str, file_name: str) -> Tuple[str, str]:
     result = cv2.GaussianBlur(result, (3, 3), 0)
 
     return save_result(result, file_name, "contours_noise")
+
+
+def save_result(result, file_name: str, method: str) -> Tuple[str, str]:
+    base_path_to_save = Config.config()["NeuralNetwork"]["pre_processing_path"]
+    path_to_save = f"{base_path_to_save}\\{method}"
+    file_path = f"{path_to_save}\\{file_name}"
+    if not os.path.exists(path_to_save):
+        os.makedirs(path_to_save)
+    cv2.imwrite(file_path, result)
+    return path_to_save, file_name
 
