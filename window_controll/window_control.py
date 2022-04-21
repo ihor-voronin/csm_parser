@@ -4,19 +4,20 @@ from typing import Union
 import pyautogui as pya
 import win32gui
 
-from config import Config
+from settings import Settings
 
 
 def set_window_position(window_id: int) -> None:
     win32gui.SetForegroundWindow(window_id)
     win32gui.MoveWindow(
         window_id,
-        Config.config()["WindowConfig"].getint("start_x"),
-        Config.config()["WindowConfig"].getint("start_y"),
-        Config.config()["WindowConfig"].getint("width"),
-        Config.config()["WindowConfig"].getint("height"),
+        Settings.start_coordinate_x,
+        Settings.start_coordinate_y,
+        Settings.window_width,
+        Settings.window_height,
         True,
     )
+    time.sleep(1.0)
 
 
 def click(x: int, y: int) -> None:

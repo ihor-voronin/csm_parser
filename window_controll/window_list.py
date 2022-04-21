@@ -3,7 +3,9 @@ import win32gui
 
 def winEnumHandler(hwnd, ctx):
     if win32gui.IsWindowVisible(hwnd):
-        print(f'{hwnd:10} -- {win32gui.GetWindowText(hwnd) or "no-name"}')
+        window_name = win32gui.GetWindowText(hwnd)
+        if window_name:
+            print(f"{hwnd:10} -- {window_name}")
 
 
 def list_of_open_windows():

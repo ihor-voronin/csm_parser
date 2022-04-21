@@ -1,31 +1,27 @@
+import os
+
 from PIL import Image
 
-from config import Config
 from image_processing.save_image import save_image
 from image_processing.screen_shot import screen_shoot
 from image_processing.transform_image import crop
+from settings import Settings
 from window_controll.window_control import set_window_position, page_down, click
 
 
 def split_screenshot_to_nicknames(
     image: Image.Image, count: int, start_y: int, name_index_start: int = 0
 ) -> None:
-    save_folder = Config.config()["ImageProcessing"]["path"]
+    save_folder = Settings.get_save_screenshot_path()
+    if not os.path.exists(save_folder):
+        os.makedirs(save_folder)
     for image_num in range(count):
         nickname_image = crop(
             image,
-            Config.config()["ImageProcessing"].getint("start_nickname_x"),
-            start_y
-            + (
-                image_num * Config.config()["ImageProcessing"].getint("nickname_height")
-            ),
-            Config.config()["ImageProcessing"].getint("start_nickname_x")
-            + Config.config()["ImageProcessing"].getint("nickname_with"),
-            start_y
-            + (
-                (image_num + 1)
-                * Config.config()["ImageProcessing"].getint("nickname_height")
-            ),
+            Settings.page_start_coordinate_nickname_x,
+            start_y + (image_num * Settings.page_nickname_height),
+            Settings.page_start_coordinate_nickname_x + Settings.page_nickname_width,
+            start_y + ((image_num + 1) * Settings.page_nickname_height),
         )
         save_image(
             image=nickname_image,
@@ -43,8 +39,8 @@ def process_page(
 ) -> None:
     # click to center of application
     click(
-        Config.config()["WindowConfig"].getint("width") / 2,
-        Config.config()["WindowConfig"].getint("height") / 2,
+        Settings.window_width / 2,
+        Settings.window_height / 2,
     )
     # page down for setup init position
     page_down()
@@ -58,22 +54,21 @@ def process_page(
         split_screenshot_to_nicknames(
             image=screen,
             count=nickname_by_pgdn,
-            start_y=Config.config()["ImageProcessing"].getint("start_nickname_y"),
+            start_y=Settings.page_start_coordinate_nickname_y,
             name_index_start=count_nicknames_in_page * page_num
             + nickname_by_pgdn * step_by_page,
         )
         page_down()
 
     # last nicknames in page
-    # todo: to config this parameters (cont of last images)
     screen = screen_shoot(window_id=window_id)
     split_screenshot_to_nicknames(
         image=screen,
         count=count_nickname_after_pgdn,
         start_y=(
-            Config.config()["ImageProcessing"].getint("start_nickname_y")
+            Settings.start_coordinate_y
             + (
-                Config.config()["ImageProcessing"].getint("nickname_height")
+                Settings.page_nickname_height
                 * (nickname_by_pgdn - count_nickname_after_pgdn + 1)
             )
         ),
@@ -88,16 +83,12 @@ def save_nicknames(window_id: int):
 
     # click to set default position of nicknames
     click(165, 211)
-    full_pgdn_in_page = Config.config()["WindowConfig"].getint("full_pgdn_in_page")
-    nickname_by_pgdn = Config.config()["WindowConfig"].getint("nickname_by_pgdn")
-    count_nickname_after_pgdn = Config.config()["WindowConfig"].getint(
-        "count_nickname_after_pgdn"
-    )
-    full_pgdn_in_last_page = Config.config()["WindowConfig"].getint(
-        "full_pgdn_in_last_page"
-    )
+    full_pgdn_in_page = Settings.PgDn_count_in_full_page
+    nickname_by_pgdn = Settings.PgDn_contain_nickname
+    count_nickname_after_pgdn = Settings.PgDn_remain_count_nickname
+    full_pgdn_in_last_page = Settings.PgDn_count_in_last_page
 
-    count_of_pages = Config.config()["WindowConfig"].getint("count_of_pages")
+    count_of_pages = Settings.page_count
     for page_mun in range(count_of_pages - 1):
         # print(f"process page {page_mun+1}")
         # click to reset pgdn position
