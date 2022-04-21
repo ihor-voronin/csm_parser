@@ -2,7 +2,7 @@ import argparse
 
 from image_processing.delete_images import delete_images
 from image_processing.template_image import prepare_for_templates, base_params_of_letters
-from nickname_recognize import prepare_nicknames, recognize
+from nickname_recognize import prepare_nicknames
 from nickname_saver import save_nicknames
 from window_controll.window_list import list_of_open_windows
 from write_nicknames import write_nicknames_to_csv
@@ -21,10 +21,6 @@ def main() -> None:
     if args.prepare_templates:
         # base_params_of_letters()
         prepare_for_templates()
-
-    if args.recognize:
-        nicknames = recognize()
-        write_nicknames_to_csv(nicknames)
 
     if args.clean:
         # todo: clean all images
@@ -55,12 +51,6 @@ if __name__ == "__main__":
         action="store_true",
     )
     parser.add_argument("-w", "--window", type=int, help="id of window to process")
-    parser.add_argument(
-        "-r",
-        "--recognize",
-        action="store_true",
-        help="recognize nicknames from image folder",
-    )
     parser.add_argument(
         "-c", "--clean", action="store_true", help="clean image folder after processing"
     )
