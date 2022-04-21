@@ -78,15 +78,15 @@ def prepare_nicknames() -> None:
         # print(
         #     f"{file:10} - {recognized_nickname_mode_6:15} - {recognized_nickname_mode_8:15}"
         # )
-    pre_processing_path = Config.config()['NeuralNetwork']['pre_processing_path']
+    pre_processing_path = Config.config()['ImageProcessing']['pre_processing_path']
     copy_to_result_folder(f"{pre_processing_path}\\crop",
-                          Config.config()["NeuralNetwork"]["result_path"])
+                          Config.config()["ImageProcessing"]["result_path"])
     # remove folder with temp images
     # shutil.rmtree(pre_processing_path)
 
 
 def recognize() -> List[Dict[str, str]]:
-    image_folder = Config.config()["NeuralNetwork"]["result_path"]
+    image_folder = Config.config()["ImageProcessing"]["result_path"]
     files = os.listdir(image_folder)
     result = []
     for file in files:
