@@ -37,6 +37,11 @@ class Settings:
     # grop NamePattern
     name_pattern = "CSM-{name}-{timestamp}"
 
+    # group_templates
+    templates_is_local = False
+    templates_url = "https://raw.githubusercontent.com/ihor-voronin/csm_parser/master/templates.json"
+    templates_local_file = "templates.json"
+
     @classmethod
     def get_save_screenshot_path(cls) -> str:
         return join(cls._user_picture_path, cls.folder_save_screenshot)

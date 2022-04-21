@@ -1,4 +1,3 @@
-import json
 import os
 
 from image_processing.load_image import load_image
@@ -6,6 +5,7 @@ from image_processing.recognize_letter_from_template import (
     recognize_letter_from_template,
 )
 from image_processing.split_image_into_letters import split_image_into_letter
+from load_templates import load_templates
 from progress_bar import progress_bar
 from settings import Settings
 from write_nicknames import write_nicknames_to_csv
@@ -16,9 +16,7 @@ def recognize_from_templates() -> None:
 
     image_names = os.listdir(image_folder)
 
-    # todo: in future - get templates file from settings
-    with open("templates.json") as json_file:
-        templates = json.load(json_file)
+    templates = load_templates()
 
     count_images = len(image_names)
     result = []

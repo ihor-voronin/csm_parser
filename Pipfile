@@ -8,12 +8,14 @@ Pillow = "==9.1.0"
 opencv-python = "==4.5.5.64"
 pywin32 = "==303"
 pyautogui = "==0.9.53"
+requests = "==2.27.1"
 
 [dev-packages]
 black = "*"
 mypy = "*"
 isort = "*"
 pre-commit = "*"
+types-requests = "*"
 
 [requires]
 python_version = "3.9"
