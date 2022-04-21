@@ -84,25 +84,3 @@ def prepare_nicknames() -> None:
     # remove folder with temp images
     # shutil.rmtree(pre_processing_path)
 
-
-def recognize() -> List[Dict[str, str]]:
-    image_folder = Config.config()["ImageProcessing"]["result_path"]
-    files = os.listdir(image_folder)
-    result = []
-    for file in files:
-        recognized_nickname_mode_6 = recognize_image(
-            f"{image_folder}\\{file}", mode=6
-        ).replace("\n", "")
-        recognized_nickname_mode_8 = recognize_image(
-            f"{image_folder}\\{file}", mode=8
-        ).replace("\n", "")
-
-        result.append(
-            {
-                "file_name": file,
-                "recognized_data": get_accurate_result(
-                    recognized_nickname_mode_6, recognized_nickname_mode_8
-                ),
-            }
-        )
-    return result
