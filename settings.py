@@ -9,21 +9,21 @@ class Settings:
     start_coordinate_x = 0
     start_coordinate_y = 0
 
-    window_width = 1200  # todo: from settings
-    window_height = 700  # todo: from settings
+    window_width = 1200
+    window_height = 700
 
     # group PgDn config
-    PgDn_contain_nickname = 13  # todo: from settings
-    PgDn_count_in_full_page = 13  # todo: from settings
-    PgDn_remain_count_nickname = 5  # todo: from settings
-    PgDn_count_in_last_page = 3  # todo: from settings
+    PgDn_contain_nickname = 13
+    PgDn_count_in_full_page = 13
+    PgDn_remain_count_nickname = 5
+    PgDn_count_in_last_page = 3
 
     # grop Nickname Page
-    page_count = 16  # todo: from settings
-    page_start_coordinate_nickname_x = 13  # todo: from settings
-    page_start_coordinate_nickname_y = 255  # todo: from settings
-    page_nickname_width = 600  # todo: from settings
-    page_nickname_height = 28  # todo: from settings
+    page_count = 16
+    page_start_coordinate_nickname_x = 13
+    page_start_coordinate_nickname_y = 255
+    page_nickname_width = 600
+    page_nickname_height = 28
 
     # grop Folder
     _user_picture_path = join(environ["USERPROFILE"], "Pictures")
