@@ -10,10 +10,10 @@ from window_controll.window_list import list_of_open_windows
 
 def main() -> None:
     if args.load_settings:
-        Settings.load_from_json(args.load_settings)
+        Settings.load_from_string(args.load_settings)
 
     if args.display_settings:
-        print(Settings.settings_json())
+        Settings.display_settings()
 
     if args.windows_list:
         list_of_open_windows()
