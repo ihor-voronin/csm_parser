@@ -30,7 +30,7 @@ def scroll(x: int, y: int, scroll_amount: Union[int, float]) -> None:
     pya.scroll(scroll_amount, x=x, y=y)
 
 
-def page_down():
+def page_down() -> None:
     pya.press("pagedown")
     # sleep for correct bufferization
     time.sleep(1.0)

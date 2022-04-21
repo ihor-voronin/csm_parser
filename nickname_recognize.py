@@ -1,14 +1,13 @@
 import os
 import shutil
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
-from settings import Settings
 import cv2
 
-from typing import Tuple
 from image_processing.load_image import load_image
 from image_processing.save_image import save_image, save_result
 from image_processing.transform_image import crop, crop_by_solid_color
+from settings import Settings
 
 
 def get_accurate_result(res1: str, res2: str) -> str:

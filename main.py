@@ -1,9 +1,7 @@
 import argparse
 
 from image_processing.delete_images import delete_images
-from image_processing.template_image import (
-    prepare_for_templates,
-)
+from image_processing.template_image import prepare_for_templates
 from nickname_recognize import prepare_nicknames
 from nickname_saver import save_nicknames
 from settings import Settings
