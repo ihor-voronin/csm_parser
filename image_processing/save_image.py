@@ -23,11 +23,10 @@ def save_image(image: Image.Image, save_folder: str, name: str) -> Tuple[str, st
 
 
 def save_result(result, file_name: str, method: str) -> Tuple[str, str]:
-    base_path_to_save = Config.config()["ImageProcessing"]["pre_processing_path"]
+    base_path_to_save = Settings.get_temp_path()
     path_to_save = f"{base_path_to_save}\\{method}"
     file_path = f"{path_to_save}\\{file_name}"
     if not os.path.exists(path_to_save):
         os.makedirs(path_to_save)
     cv2.imwrite(file_path, result)
     return path_to_save, file_name
-

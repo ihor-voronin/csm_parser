@@ -8,7 +8,6 @@ from nickname_recognize import prepare_nicknames
 from nickname_saver import save_nicknames
 from settings import Settings
 from window_controll.window_list import list_of_open_windows
-from write_nicknames import write_nicknames_to_csv
 
 
 def main() -> None:
