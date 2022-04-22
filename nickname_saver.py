@@ -6,7 +6,7 @@ from image_processing.save_image import save_image
 from image_processing.screen_shot import screen_shoot
 from image_processing.transform_image import crop
 from settings import Settings
-from window_controll.window_control import set_window_position, page_down, click
+from window_controll.window_control import click, page_down, set_window_position
 
 
 def split_screenshot_to_nicknames(
@@ -77,7 +77,7 @@ def process_page(
     )
 
 
-def save_nicknames(window_id: int):
+def save_nicknames(window_id: int) -> None:
     # set base position for correct processing
     set_window_position(window_id)
 

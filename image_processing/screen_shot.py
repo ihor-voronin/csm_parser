@@ -1,9 +1,9 @@
 from typing import Optional
 
 import win32con
+import win32gui
 import win32ui
 from PIL import Image
-import win32gui
 
 
 def screen_shoot(window_id: int) -> Optional[Image.Image]:

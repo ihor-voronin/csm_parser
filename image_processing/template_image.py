@@ -1,13 +1,15 @@
 import json
 import os
 
+from PIL import Image
+
 from image_processing.load_image import load_image
 from image_processing.transform_image import crop, crop_by_solid_color
 from settings import Settings
 from write_nicknames import write_nicknames_to_csv
 
 
-def check_color(image, x, y, color) -> bool:
+def check_color(image: Image.Image, x: int, y: int, color: int) -> bool:
     width, height = image.size
     if x >= width:
         return False
@@ -16,7 +18,7 @@ def check_color(image, x, y, color) -> bool:
     return image.getpixel((x, y)) == color
 
 
-def prepare_for_templates():
+def prepare_for_templates() -> None:
     image_folder = Settings.get_save_processed_path()
 
     image_names = os.listdir(image_folder)
@@ -120,7 +122,9 @@ def prepare_for_templates():
                     # if any([letter.getpixel(tuple(white_point)) == color_black for white_point in white_points]):
                     if any(
                         [
-                            check_color(letter, *white_point, color_black)
+                            check_color(
+                                letter, white_point[0], white_point[1], color_black
+                            )
                             for white_point in white_points
                         ]
                     ):
@@ -133,7 +137,7 @@ def prepare_for_templates():
                     # if any([letter.getpixel(tuple(black_point)) != color_black for black_point in black_points]):
                     if any(
                         [
-                            check_color(letter, *black_point, 255)
+                            check_color(letter, black_point[0], black_point[1], 255)
                             for black_point in black_points
                         ]
                     ):

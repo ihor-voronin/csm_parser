@@ -1,12 +1,12 @@
 import csv
 from os.path import join
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from settings import Settings
 
 
 def write_nicknames_to_csv(
-    nicknames: List[Dict[str, str]], output_file_name: str = "output.csv"
+    nicknames: List[Dict[str, Any]], output_file_name: str = "output.csv"
 ) -> None:
     csv_columns = nicknames[0].keys()
 
