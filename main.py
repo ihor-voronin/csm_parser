@@ -1,34 +1,34 @@
 import argparse
 
-from image_processing.delete_images import delete_images
-from image_processing.template_image import prepare_for_templates
+from delete_folders import clean_folders
+from image_processing.recognize_from_templates import recognize_from_templates
 from nickname_recognize import prepare_nicknames
-from nickname_saver import save_nicknames
+from screenshot_of_nickname import create_screenshots_of_nicknames
 from settings import Settings
 from window_controll.window_list import list_of_open_windows
 
 
 def main() -> None:
     if args.load_settings:
-        Settings.load_from_json(args.load_settings)
+        Settings.load_from_string(args.load_settings)
 
     if args.display_settings:
-        print(Settings.settings_json())
+        Settings.display_settings()
 
     if args.windows_list:
         list_of_open_windows()
 
-    if args.window:
-        save_nicknames(args.window)
+    if args.screenshot_generation:
+        create_screenshots_of_nicknames(args.screenshot_generation)
 
-    if args.prepare_images:
+    if args.prepare_nicknames:
         prepare_nicknames()
 
     if args.recognize_templates:
-        prepare_for_templates()
+        recognize_from_templates()
 
     if args.clean:
-        delete_images()
+        clean_folders()
 
 
 if __name__ == "__main__":
@@ -39,25 +39,25 @@ if __name__ == "__main__":
     parser.add_argument(
         "-ds",
         "--display-settings",
-        help="Display settings params",
+        help="Display current settings params",
         action="store_true",
     )
     parser.add_argument(
         "-ls",
         "--load-settings",
-        help="Load settings params",
+        help="Load settings params from string in json format",
         type=str,
     )
     parser.add_argument(
         "-wl",
         "--windows-list",
-        help="Display list with available windows",
+        help="List of open windows with their IDs",
         action="store_true",
     )
     parser.add_argument(
         "-p",
-        "--prepare-images",
-        help="preprocess images for recognize",
+        "--prepare-nicknames",
+        help="preprocess nicknames for recognize",
         action="store_true",
     )
     parser.add_argument(
@@ -66,10 +66,13 @@ if __name__ == "__main__":
         help="Recognize nicknames by templates method",
         action="store_true",
     )
-    parser.add_argument("-w", "--window", type=int, help="id of window to process")
     parser.add_argument(
-        "-c", "--clean", action="store_true", help="clean image folder after processing"
+        "-sg",
+        "--screenshot-generation",
+        type=int,
+        help="Generate screenshot of nicknames from selected window. ID of window required for process",
     )
+    parser.add_argument("-c", "--clean", action="store_true", help="Clean used folders")
 
     args = parser.parse_args()
     config = vars(args)

@@ -3,10 +3,17 @@ import os
 from PIL import Image
 
 from image_processing.save_image import save_image
-from image_processing.screen_shot import screen_shoot
 from image_processing.transform_image import crop
+from progress_bar import progress_bar
 from settings import Settings
-from window_controll.window_control import click, page_down, set_window_position
+from window_controll.screen_shot import screen_shoot
+from window_controll.window_control import (
+    click,
+    maximize_window,
+    minimize_window,
+    page_down,
+    set_window_position,
+)
 
 
 def split_screenshot_to_nicknames(
@@ -77,20 +84,16 @@ def process_page(
     )
 
 
-def save_nicknames(window_id: int) -> None:
-    # set base position for correct processing
-    set_window_position(window_id)
-
-    # click to set default position of nicknames
-    click(165, 211)
+def generate_screenshots(window_id: int) -> None:
     full_pgdn_in_page = Settings.PgDn_count_in_full_page
     nickname_by_pgdn = Settings.PgDn_contain_nickname
     count_nickname_after_pgdn = Settings.PgDn_remain_count_nickname
     full_pgdn_in_last_page = Settings.PgDn_count_in_last_page
 
     count_of_pages = Settings.page_count
+    progress_bar(0, count_of_pages, prefix="Progress:", suffix="Complete", length=50)
+
     for page_mun in range(count_of_pages - 1):
-        # print(f"process page {page_mun+1}")
         # click to reset pgdn position
         click(750, 75)
         process_page(
@@ -100,10 +103,15 @@ def save_nicknames(window_id: int) -> None:
             nickname_by_pgdn=nickname_by_pgdn,
             count_nickname_after_pgdn=count_nickname_after_pgdn,
         )
-
+        progress_bar(
+            page_mun + 1,
+            count_of_pages,
+            prefix="Progress:",
+            suffix="Complete",
+            length=50,
+        )
         click(860, 211)  # click to next page
 
-    # print(f"process page {count_of_pages}")
     process_page(
         page_num=count_of_pages - 1,
         window_id=window_id,
@@ -111,3 +119,31 @@ def save_nicknames(window_id: int) -> None:
         nickname_by_pgdn=nickname_by_pgdn,
         count_nickname_after_pgdn=count_nickname_after_pgdn,
     )
+    progress_bar(
+        count_of_pages, count_of_pages, prefix="Progress:", suffix="Complete", length=50
+    )
+
+
+def create_screenshots_of_nicknames(window_id: int) -> None:
+    print(
+        """
+Start getting nicknames from the app.
+IMPORTANT!!!
+Do not move the mouse cursor or click until the window is minimized
+    """
+    )
+    try:
+        input("Press Enter to continue...")
+    except SyntaxError:
+        pass
+    # set base position for correct processing
+    maximize_window(window_id)
+    set_window_position(window_id)
+
+    # click to set default position of nicknames
+    click(165, 211)
+
+    generate_screenshots(window_id)
+
+    minimize_window(window_id)
+    print(f"Nicknames saved to {Settings.get_save_screenshot_path()}")

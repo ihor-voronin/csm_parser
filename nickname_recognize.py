@@ -5,8 +5,9 @@ from typing import Dict, List, Tuple
 import cv2
 
 from image_processing.load_image import load_image
-from image_processing.save_image import save_image, save_result
+from image_processing.save_image import save_cv2_image, save_image
 from image_processing.transform_image import crop, crop_by_solid_color
+from progress_bar import progress_bar
 from settings import Settings
 
 
@@ -71,10 +72,11 @@ def otsu_threshold(image_folder: str, file_name: str) -> Tuple[str, str]:
     image = cv2.imread(f"{image_folder}\\{file_name}")
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
-    return save_result(thresh, file_name, "otsu_threshold")
+    return save_cv2_image(thresh, file_name, "otsu_threshold")
 
 
 def prepare_nicknames() -> None:
+    print("Prepare nicknames for recognizing")
     base_image_path = Settings.get_save_screenshot_path()
     # create folder if not exists
     if not os.path.exists(base_image_path):
@@ -84,18 +86,22 @@ def prepare_nicknames() -> None:
     if not files:
         raise Exception(f"Folder {base_image_path} empty")
 
-    for base_image_name in files:
+    count_images = len(files)
 
+    progress_bar(0, count_images, prefix="Progress:", suffix="Complete", length=50)
+    for image_num, base_image_name in enumerate(files, start=1):
+        progress_bar(
+            image_num, count_images, prefix="Progress:", suffix="Complete", length=50
+        )
         image_path, image_name = crop_base_image(base_image_path, base_image_name)
         image_path, image_name = otsu_threshold(image_path, image_name)
         image_path, image_name = crop_free_space(image_path, image_name)
 
-        # print(
-        #     f"{file:10} - {recognized_nickname_mode_6:15} - {recognized_nickname_mode_8:15}"
-        # )
     pre_processing_path = Settings.get_temp_path()
+    print(f"Move prepared images to {Settings.get_save_processed_path()} ...")
     copy_to_result_folder(
         f"{pre_processing_path}\\crop", Settings.get_save_processed_path()
     )
+    print(f"{count_images} image prepared for recognising.")
     # remove folder with temp images
     shutil.rmtree(pre_processing_path)

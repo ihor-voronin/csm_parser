@@ -37,6 +37,11 @@ class Settings:
     # grop NamePattern
     name_pattern = "CSM-{name}-{timestamp}"
 
+    # group_templates
+    templates_is_local = False
+    templates_url = "https://raw.githubusercontent.com/ihor-voronin/csm_parser/master/templates.json"
+    templates_local_file = "templates.json"
+
     @classmethod
     def get_save_screenshot_path(cls) -> str:
         return join(cls._user_picture_path, cls.folder_save_screenshot)
@@ -65,17 +70,20 @@ class Settings:
         }
 
     @classmethod
-    def settings_json(cls) -> str:
-        return json.dumps(
-            cls._class_variables(),
-            sort_keys=True,
-            indent=4,
+    def display_settings(cls) -> None:
+        print(
+            f"""\nCurrent settings:
+            \n{json.dumps(
+                cls._class_variables(),
+                sort_keys=True,
+                indent=4,
+            )}\n
+        """
         )
 
     @classmethod
-    def load_from_json(cls, payload: str) -> None:
-        print(payload)
-        payload_dict = json.loads(payload)
+    def load_from_string(cls, settings_string: str) -> None:
+        payload_dict = json.loads(settings_string)
         class_variables = cls._class_variables()
         for key, value in payload_dict.items():
             if key not in class_variables.keys():
@@ -83,3 +91,4 @@ class Settings:
             if not isinstance(value, type(class_variables[key])):
                 raise Exception(f"Incorrect value type for key '{key}'")
             setattr(cls, key, value)
+        print(f"New settings for {list(payload_dict.keys())} applied.")

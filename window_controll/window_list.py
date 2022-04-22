@@ -11,5 +11,6 @@ def winEnumHandler(hwnd: Any, ctx: Any) -> None:
 
 
 def list_of_open_windows() -> None:
+    print("List of open windows with their IDs")
     print("window_id \t window_name")
     return win32gui.EnumWindows(winEnumHandler, None)
