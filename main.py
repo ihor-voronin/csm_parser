@@ -7,7 +7,7 @@ from screenshot_of_nickname import create_screenshots_of_nicknames
 from settings import Settings
 from window_controll.window_list import list_of_open_windows
 
-__version__ = "V0.0.0"
+__version__ = "V0.0.1"
 
 
 def main() -> None:
