@@ -18,14 +18,14 @@ class Settings:
     PgDn_remain_count_nickname = 5
     PgDn_count_in_last_page = 3
 
-    # grop Nickname Page
+    # group Nickname Page
     page_count = 16
     page_start_coordinate_nickname_x = 13
     page_start_coordinate_nickname_y = 255
     page_nickname_width = 600
     page_nickname_height = 28
 
-    # grop Folder
+    # group Folder
     _user_picture_path = join(environ["USERPROFILE"], "Pictures")
     _user_documents_path = join(environ["USERPROFILE"], "Documents")
     _user_temp_path = tempfile.gettempdir()
@@ -34,7 +34,7 @@ class Settings:
     folder_save_processed = "CSM_parser_processed"
     folder_save_temp = "CSM_parser_temp"
 
-    # grop NamePattern
+    # group NamePattern
     name_pattern = "CSM-{name}-{timestamp}"
 
     # group_templates
@@ -92,3 +92,16 @@ class Settings:
                 raise Exception(f"Incorrect value type for key '{key}'")
             setattr(cls, key, value)
         print(f"New settings for {list(payload_dict.keys())} applied.")
+
+    @classmethod
+    def get_settings(cls, filename) -> None:
+        class_variables = cls._class_variables()
+        with open("settings.json") as filename:
+            file_dict = json.load(filename)
+            for key, value in file_dict.items():
+                if not isinstance(value, type(class_variables[key])):
+                    raise Exception(f"Incorrect value type for key '{key}'")
+                setattr(cls, key, value)
+                # print(key, value)
+            print("New settings were applied")
+

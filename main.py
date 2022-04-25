@@ -15,6 +15,9 @@ def main() -> None:
     if args.display_settings:
         Settings.display_settings()
 
+    if args.settings_file:
+        Settings.get_settings(args.settings_file)
+
     if args.windows_list:
         list_of_open_windows()
 
@@ -41,6 +44,12 @@ if __name__ == "__main__":
         "--display-settings",
         help="Display current settings params",
         action="store_true",
+    )
+    parser.add_argument(
+        "-sf",
+        "--settings-file",
+        help="Load settings params from file",
+        type=argparse.FileType('r'),
     )
     parser.add_argument(
         "-ls",

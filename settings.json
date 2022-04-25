@@ -1,0 +1,22 @@
+{
+    "start_coordinate_x": 100,
+    "start_coordinate_y": 0,
+    "window_width": 1200,
+    "window_height": 700,
+    "PgDn_contain_nickname": 13,
+    "PgDn_count_in_full_page": 13,
+    "PgDn_remain_count_nickname": 5,
+    "PgDn_count_in_last_page": 3,
+    "page_count": 16,
+    "page_start_coordinate_nickname_x": 13,
+    "page_start_coordinate_nickname_y": 255,
+    "page_nickname_width": 600,
+    "page_nickname_height": 28,
+    "folder_save_screenshot": "CSM_parser_screenshot",
+    "folder_save_processed": "CSM_parser_processed",
+    "folder_save_temp": "CSM_parser_temp",
+    "name_pattern": "CSM-{name}-{timestamp}",
+    "templates_is_local": false,
+    "templates_url": "https://raw.githubusercontent.com/ihor-voronin/csm_parser/master/templates.json",
+    "templates_local_file": "templates.json"
+}
