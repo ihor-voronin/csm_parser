@@ -94,14 +94,8 @@ class Settings:
         print(f"New settings for {list(payload_dict.keys())} applied.")
 
     @classmethod
-    def get_settings(cls, filename) -> None:
+    def load_from_file(cls, filename: str) -> None:
         class_variables = cls._class_variables()
-        with open("settings.json") as filename:
-            file_dict = json.load(filename)
-            for key, value in file_dict.items():
-                if not isinstance(value, type(class_variables[key])):
-                    raise Exception(f"Incorrect value type for key '{key}'")
-                setattr(cls, key, value)
-                # print(key, value)
-            print("New settings were applied")
-
+        print(filename)
+        with open(filename, "r") as file:
+            cls.load_from_string(file.read())

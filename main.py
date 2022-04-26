@@ -12,11 +12,11 @@ def main() -> None:
     if args.load_settings:
         Settings.load_from_string(args.load_settings)
 
+    if args.load_file:
+        Settings.load_from_file(args.load_file)
+
     if args.display_settings:
         Settings.display_settings()
-
-    if args.settings_file:
-        Settings.get_settings(args.settings_file)
 
     if args.windows_list:
         list_of_open_windows()
@@ -46,10 +46,10 @@ if __name__ == "__main__":
         action="store_true",
     )
     parser.add_argument(
-        "-sf",
-        "--settings-file",
+        "-lf",
+        "--load-file",
         help="Load settings params from file",
-        type=argparse.FileType('r'),
+        type=str,
     )
     parser.add_argument(
         "-ls",
