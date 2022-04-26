@@ -95,7 +95,5 @@ class Settings:
 
     @classmethod
     def load_from_file(cls, filename: str) -> None:
-        class_variables = cls._class_variables()
-        print(filename)
         with open(filename, "r") as file:
             cls.load_from_string(file.read())
