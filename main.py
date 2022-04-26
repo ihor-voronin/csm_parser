@@ -8,7 +8,7 @@ from screenshot_of_nickname import create_screenshots_of_nicknames
 from settings import Settings
 from window_controll.window_list import list_of_open_windows
 
-__version__ = "V0.0.1"
+__version__ = "V1.0.0"
 
 from write_nicknames import write_nicknames_to_csv
 
