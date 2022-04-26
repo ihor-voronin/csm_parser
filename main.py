@@ -17,6 +17,9 @@ def main() -> None:
     if args.load_settings:
         Settings.load_from_string(args.load_settings)
 
+    if args.load_file:
+        Settings.load_from_file(args.load_file)
+
     if args.display_settings:
         Settings.display_settings()
 
@@ -48,6 +51,12 @@ if __name__ == "__main__":
         "--display-settings",
         help="Display current settings params",
         action="store_true",
+    )
+    parser.add_argument(
+        "-lf",
+        "--load-file",
+        help="Load settings params from file",
+        type=str,
     )
     parser.add_argument(
         "-ls",

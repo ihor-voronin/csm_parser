@@ -15,7 +15,7 @@ class Settings:
     # group PgDn config
     PgDn_contain_nickname = 13
 
-    # grop Nickname Page
+    # group Nickname Page
     page_count = 16
     page_start_coordinate_nickname_x = 13
     page_start_coordinate_nickname_y = 255
@@ -24,7 +24,7 @@ class Settings:
     page_nickname_count = 200
     page_last_nickname_count = 48
 
-    # grop Folder
+    # group Folder
     _user_picture_path = join(environ["USERPROFILE"], "Pictures")
     _user_documents_path = join(environ["USERPROFILE"], "Documents")
     _user_temp_path = tempfile.gettempdir()
@@ -33,7 +33,7 @@ class Settings:
     folder_save_processed = "CSM_parser_processed"
     folder_save_temp = "CSM_parser_temp"
 
-    # grop NamePattern
+    # group NamePattern
     name_pattern = "CSM-{name}-{timestamp}"
 
     # group_templates
@@ -104,3 +104,8 @@ class Settings:
                 raise Exception(f"Incorrect value type for key '{key}'")
             setattr(cls, key, value)
         print(f"New settings for {list(payload_dict.keys())} applied.")
+
+    @classmethod
+    def load_from_file(cls, filename: str) -> None:
+        with open(filename, "r") as file:
+            cls.load_from_string(file.read())
