@@ -1,4 +1,5 @@
 import os
+import time
 
 from PIL import Image
 
@@ -52,8 +53,6 @@ def process_page(
     # page down for setup init position
     page_down()
 
-    count_nicknames_in_page = 200
-
     for step_by_page in range(full_pgdn_in_page):
         # take screen of window
         screen = screen_shoot(window_id=window_id)
@@ -62,33 +61,45 @@ def process_page(
             image=screen,
             count=nickname_by_pgdn,
             start_y=Settings.page_start_coordinate_nickname_y,
-            name_index_start=count_nicknames_in_page * page_num
+            name_index_start=Settings.page_nickname_count * page_num
             + nickname_by_pgdn * step_by_page,
         )
         page_down()
 
     # last nicknames in page
     screen = screen_shoot(window_id=window_id)
+    # print(
+    #     f"count_nickname_after_pgdn: {count_nickname_after_pgdn} \n"
+    #     f"nickname_by_pgdn: {nickname_by_pgdn} \n"
+    #     f"diff: {(nickname_by_pgdn - count_nickname_after_pgdn)}\n"
+    # )
     split_screenshot_to_nicknames(
         image=screen,
         count=count_nickname_after_pgdn,
         start_y=(
-            Settings.start_coordinate_y
+            Settings.page_start_coordinate_nickname_y
             + (
                 Settings.page_nickname_height
-                * (nickname_by_pgdn - count_nickname_after_pgdn + 1)
+                * ((nickname_by_pgdn - count_nickname_after_pgdn) + 1)
             )
         ),
-        name_index_start=count_nicknames_in_page * page_num
+        name_index_start=Settings.page_nickname_count * page_num
         + nickname_by_pgdn * full_pgdn_in_page,
     )
 
 
 def generate_screenshots(window_id: int) -> None:
-    full_pgdn_in_page = Settings.PgDn_count_in_full_page
+    full_pgdn_in_page = Settings.page_nickname_count // Settings.PgDn_contain_nickname
     nickname_by_pgdn = Settings.PgDn_contain_nickname
-    count_nickname_after_pgdn = Settings.PgDn_remain_count_nickname
-    full_pgdn_in_last_page = Settings.PgDn_count_in_last_page
+    count_nickname_after_pgdn = (
+        Settings.page_nickname_count % Settings.PgDn_contain_nickname
+    )
+    full_pgdn_in_last_page = (
+        Settings.page_last_nickname_count // Settings.PgDn_contain_nickname
+    )
+    count_nickname_after_pgdn_in_last_page = (
+        Settings.page_last_nickname_count % Settings.PgDn_contain_nickname
+    )
 
     count_of_pages = Settings.page_count
     progress_bar(0, count_of_pages, prefix="Progress:", suffix="Complete", length=50)
@@ -117,7 +128,7 @@ def generate_screenshots(window_id: int) -> None:
         window_id=window_id,
         full_pgdn_in_page=full_pgdn_in_last_page,
         nickname_by_pgdn=nickname_by_pgdn,
-        count_nickname_after_pgdn=count_nickname_after_pgdn,
+        count_nickname_after_pgdn=count_nickname_after_pgdn_in_last_page,
     )
     progress_bar(
         count_of_pages, count_of_pages, prefix="Progress:", suffix="Complete", length=50
