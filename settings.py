@@ -14,9 +14,6 @@ class Settings:
 
     # group PgDn config
     PgDn_contain_nickname = 13
-    PgDn_count_in_full_page = 13
-    PgDn_remain_count_nickname = 5
-    PgDn_count_in_last_page = 3
 
     # grop Nickname Page
     page_count = 16
@@ -24,6 +21,8 @@ class Settings:
     page_start_coordinate_nickname_y = 255
     page_nickname_width = 600
     page_nickname_height = 28
+    page_nickname_count = 200
+    page_last_nickname_count = 48
 
     # grop Folder
     _user_picture_path = join(environ["USERPROFILE"], "Pictures")
@@ -41,6 +40,19 @@ class Settings:
     templates_is_local = False
     templates_url = "https://raw.githubusercontent.com/ihor-voronin/csm_parser/master/templates.json"
     templates_local_file = "templates.json"
+
+    # group database
+    database_host = "localhost"
+    database_database = "ddm"
+    database_user = "root"
+    database_password = "uberpass"
+
+    # group csv
+    csv_output_file_name = "output.csv"
+    csv_num_column = "num"
+    csv_file_name_column = "file_name"
+    csv_nickname_column = "nickname"
+    csv_balance_column = "balance"
 
     @classmethod
     def get_save_screenshot_path(cls) -> str:
