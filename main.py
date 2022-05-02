@@ -13,10 +13,11 @@ def main() -> None:
     print(vars(args))
     if (
         vars(args)["window_id"] is False
-            and vars(args)["prepare_nicknames"] is False
-            and vars(args)["recognize_templates"] is False
-            and vars(args)["screenshot_generation"] is None
-            and vars(args)["clean"] is False):
+        and vars(args)["prepare_nicknames"] is False
+        and vars(args)["recognize_templates"] is False
+        and vars(args)["screenshot_generation"] is None
+        and vars(args)["clean"] is False
+    ):
         print("all methods activated step by step")
         all_methods = True
 
