@@ -10,13 +10,13 @@ from window_controll.window_list import get_window_id_from_opened_windows
 
 def main() -> None:
     all_methods = False
-    print(vars(args))
     if (
         vars(args)["window_id"] is False
-            and vars(args)["prepare_nicknames"] is False
-            and vars(args)["recognize_templates"] is False
-            and vars(args)["screenshot_generation"] is None
-            and vars(args)["clean"] is False):
+        and vars(args)["prepare_nicknames"] is False
+        and vars(args)["recognize_templates"] is False
+        and vars(args)["screenshot_generation"] is None
+        and vars(args)["clean"] is False
+    ):
         print("all methods activated step by step")
         all_methods = True
 
