@@ -11,6 +11,7 @@ class Settings:
 
     window_width = 1200
     window_height = 700
+    window_name = "discord"
 
     # group PgDn config
     PgDn_contain_nickname = 13

@@ -5,21 +5,19 @@ from image_processing.recognize_from_templates import recognize_from_templates
 from nickname_recognize import prepare_nicknames
 from screenshot_of_nickname import create_screenshots_of_nicknames
 from settings import Settings
-from window_controll.window_list import list_of_open_windows
+from window_controll.window_list import get_window_id_from_opened_windows
 
 
 def main() -> None:
     all_methods = False
+    print(vars(args))
     if (
-        vars(args)[
-            "windows-list"
-            and "prepare-nicknames"
-            and "recognize-templates"
-            and "screenshot-generation"
-            and "clean"
-        ]
-        is False
-    ):
+        vars(args)["window_id"] is False
+            and vars(args)["prepare_nicknames"] is False
+            and vars(args)["recognize_templates"] is False
+            and vars(args)["screenshot_generation"] is None
+            and vars(args)["clean"] is False):
+        print("all methods activated step by step")
         all_methods = True
 
     if args.load_settings:
@@ -31,12 +29,12 @@ def main() -> None:
     if args.display_settings:
         print("Settings.display_settings()")
 
-    if args.windows_list or all_methods:
-        a = list_of_open_windows()
-        # print(a)
+    window_id = args.screenshot_generation
+    if args.window_id or all_methods:
+        window_id = get_window_id_from_opened_windows()
 
     if args.screenshot_generation or all_methods:
-        print("create_screenshots_of_nicknames(args.screenshot_generation)")
+        print(f"create_screenshots_of_nicknames({window_id})")
 
     if args.prepare_nicknames or all_methods:
         print("prepare_nicknames()")
@@ -46,7 +44,6 @@ def main() -> None:
 
     if args.clean or all_methods:
         print("clean_folders()")
-        print("aaaaaa")
 
 
 if __name__ == "__main__":
@@ -73,9 +70,9 @@ if __name__ == "__main__":
         type=str,
     )
     parser.add_argument(
-        "-wl",
-        "--windows-list",
-        help="List of open windows with their IDs",
+        "-w",
+        "--window-id",
+        help="ID of CSM window among opened windows",
         action="store_true",
     )
     parser.add_argument(
