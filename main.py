@@ -21,20 +21,20 @@ def main() -> None:
         all_methods = True
 
     if args.load_settings:
-        print("Settings.load_from_string(args.load_settings)")
+        Settings.load_from_string(args.load_settings)
 
     if args.load_file:
-        print("Settings.load_from_file(args.load_file)")
+        Settings.load_from_file(args.load_file)
 
     if args.display_settings:
-        print("Settings.display_settings()")
+        Settings.display_settings()
 
     window_id = args.screenshot_generation
     if args.window_id or all_methods:
         window_id = get_window_id_from_opened_windows()
 
     if args.screenshot_generation or all_methods:
-        print(f"create_screenshots_of_nicknames({window_id})")
+        print("create_screenshots_of_nicknames(window_id)")
 
     if args.prepare_nicknames or all_methods:
         print("prepare_nicknames()")
