@@ -34,16 +34,16 @@ def main() -> None:
         window_id = get_window_id_from_opened_windows()
 
     if args.screenshot_generation or all_methods:
-        print("create_screenshots_of_nicknames(window_id)")
+        create_screenshots_of_nicknames(window_id)
 
     if args.prepare_nicknames or all_methods:
-        print("prepare_nicknames()")
+        prepare_nicknames()
 
     if args.recognize_templates or all_methods:
-        print("recognize_from_templates()")
+        recognize_from_templates()
 
     if args.clean or all_methods:
-        print("clean_folders()")
+        clean_folders()
 
 
 if __name__ == "__main__":
