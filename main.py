@@ -2,10 +2,15 @@ import argparse
 
 from delete_folders import clean_folders
 from image_processing.recognize_from_templates import recognize_from_templates
+from msql import select_money
 from nickname_recognize import prepare_nicknames
 from screenshot_of_nickname import create_screenshots_of_nicknames
 from settings import Settings
 from window_controll.window_list import get_window_id_from_opened_windows
+
+__version__ = "V1.0.0"
+
+from write_nicknames import write_nicknames_to_csv
 
 
 def main() -> None:
@@ -39,8 +44,10 @@ def main() -> None:
     if args.prepare_nicknames or all_methods:
         prepare_nicknames()
 
-    if args.recognize_templates or all_methods:
-        recognize_from_templates()
+    if args.recognize_templates:
+        nicknames = recognize_from_templates()
+        remain_money = select_money()
+        write_nicknames_to_csv(nicknames, remain_money=remain_money)
 
     if args.clean or all_methods:
         clean_folders()

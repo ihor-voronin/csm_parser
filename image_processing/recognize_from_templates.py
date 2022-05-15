@@ -1,4 +1,5 @@
 import os
+from typing import Any, Dict, List
 
 from image_processing.load_image import load_image
 from image_processing.recognize_letter_from_template import (
@@ -8,10 +9,9 @@ from image_processing.split_image_into_letters import split_image_into_letter
 from load_templates import load_templates
 from progress_bar import progress_bar
 from settings import Settings
-from write_nicknames import write_nicknames_to_csv
 
 
-def recognize_from_templates() -> None:
+def recognize_from_templates() -> List[Dict[str, Any]]:
     image_folder = Settings.get_save_processed_path()
 
     image_names = os.listdir(image_folder)
@@ -37,5 +37,4 @@ def recognize_from_templates() -> None:
             image_num, count_images, prefix="Progress:", suffix="Complete", length=50
         )
 
-    # todo: get result file name from settings
-    write_nicknames_to_csv(result)
+    return result
