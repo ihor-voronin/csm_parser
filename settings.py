@@ -11,6 +11,7 @@ class Settings:
 
     window_width = 1200
     window_height = 700
+    window_name = "Cyber Station Manager"
 
     # group PgDn config
     PgDn_contain_nickname = 13
@@ -99,9 +100,9 @@ class Settings:
         class_variables = cls._class_variables()
         for key, value in payload_dict.items():
             if key not in class_variables.keys():
-                raise Exception(f"Incorrect key '{key}'")
+                raise AttributeError(f"Incorrect key '{key}'")
             if not isinstance(value, type(class_variables[key])):
-                raise Exception(f"Incorrect value type for key '{key}'")
+                raise TypeError(f"Incorrect value type for key '{key}'")
             setattr(cls, key, value)
         print(f"New settings for {list(payload_dict.keys())} applied.")
 

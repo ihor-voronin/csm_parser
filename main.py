@@ -6,7 +6,7 @@ from msql import select_money
 from nickname_recognize import prepare_nicknames
 from screenshot_of_nickname import create_screenshots_of_nicknames
 from settings import Settings
-from window_controll.window_list import list_of_open_windows
+from window_controll.window_list import get_window_id_from_opened_windows
 
 __version__ = "V1.0.0"
 
@@ -14,6 +14,17 @@ from write_nicknames import write_nicknames_to_csv
 
 
 def main() -> None:
+    all_methods = False
+    if (
+        vars(args)["window_id"] is False
+        and vars(args)["prepare_nicknames"] is False
+        and vars(args)["recognize_templates"] is False
+        and vars(args)["screenshot_generation"] is None
+        and vars(args)["clean"] is False
+    ):
+        print("all methods activated step by step")
+        all_methods = True
+
     if args.load_settings:
         Settings.load_from_string(args.load_settings)
 
@@ -23,13 +34,14 @@ def main() -> None:
     if args.display_settings:
         Settings.display_settings()
 
-    if args.windows_list:
-        list_of_open_windows()
+    window_id = args.screenshot_generation
+    if args.window_id or all_methods:
+        window_id = get_window_id_from_opened_windows()
 
-    if args.screenshot_generation:
-        create_screenshots_of_nicknames(args.screenshot_generation)
+    if args.screenshot_generation or all_methods:
+        create_screenshots_of_nicknames(window_id)
 
-    if args.prepare_nicknames:
+    if args.prepare_nicknames or all_methods:
         prepare_nicknames()
 
     if args.recognize_templates:
@@ -37,7 +49,7 @@ def main() -> None:
         remain_money = select_money()
         write_nicknames_to_csv(nicknames, remain_money=remain_money)
 
-    if args.clean:
+    if args.clean or all_methods:
         clean_folders()
 
 
@@ -65,9 +77,9 @@ if __name__ == "__main__":
         type=str,
     )
     parser.add_argument(
-        "-wl",
-        "--windows-list",
-        help="List of open windows with their IDs",
+        "-w",
+        "--window-id",
+        help="ID of CSM window among opened windows",
         action="store_true",
     )
     parser.add_argument(
@@ -91,6 +103,6 @@ if __name__ == "__main__":
     parser.add_argument("-c", "--clean", action="store_true", help="Clean used folders")
 
     args = parser.parse_args()
-    config = vars(args)
+    # config = vars(args)
     # print(config)
     main()
