@@ -44,7 +44,7 @@ def main() -> None:
     if args.prepare_nicknames or all_methods:
         prepare_nicknames()
 
-    if args.recognize_templates:
+    if args.recognize_templates or all_methods:
         nicknames = recognize_from_templates()
         remain_money = select_money()
         write_nicknames_to_csv(nicknames, remain_money=remain_money)
