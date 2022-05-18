@@ -21,6 +21,16 @@ on:
     - cron: '43 14 * * 6'
 
 jobs:
+  lint:
+    name: Black
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: psf/black@stable
+        with:
+          options: "--check --verbose"
+          src: "."
+          version: "22.3.0"
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
