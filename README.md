@@ -1,8 +1,12 @@
 # CSM parser
+[![GitHub Pipenv locked Python version (branch)](https://img.shields.io/github/pipenv/locked/python-version/ihor-voronin/csm_parser/master?logo=python&logoColor=FBE072)](https://github.com/ihor-voronin/csm_parser/blob/master/Pipfile)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Checked with mypy](http://www.mypy-lang.org/static/mypy_badge.svg)](http://mypy-lang.org/)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
-
+[![GitHub contributors](https://img.shields.io/github/contributors/ihor-voronin/csm_parser?logo=github)](https://github.com/ihor-voronin/csm_parser/graphs/contributors)
+[![GitHub commits since latest release (by SemVer including pre-releases)](https://img.shields.io/github/commits-since/ihor-voronin/csm_parser/latest?include_prereleases&logo=github)](https://github.com/ihor-voronin/csm_parser/releases/latest)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ihor-voronin/csm_parser/CodeQL?label=checks&logo=github)](https://github.com/ihor-voronin/csm_parser/blob/master/.github/workflows/codeql.yml)
+![Code platform](https://img.shields.io/badge/platform-windows-blue?logo=windows)
 
 ## Install dev version
 
