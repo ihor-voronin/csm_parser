@@ -15,22 +15,22 @@
 ### Install environment
 Create a command line entry point `pipenv` as a `dev`
 ```bash
-$ pipenv sync --dev 
+> pipenv sync --dev 
 ```
 
 ### Install pre-commit
 
 Install `pre-commit` tools:
 ```bash
-$ pre-commit install 
+> pre-commit install 
 ```
 
-# Install build version
+## Install build version
 
-## Rules of installation
+### Rules of installation
 TODO
 
-# How to use
+## How to use
 
 ### 1. Get ID of open window with  Cyber Station Manager
 
@@ -38,11 +38,11 @@ TODO
 
 Command:
 ```bash
-$ python ./main.py  --windows-list
+> python ./main.py  --windows-list
 ```
 Example output:
 ```bash
-$ python ./main.py --windows-list
+> python ./main.py --windows-list
 List of open windows with their IDs
 window_id        window_name
     132664 -- Basic Syntax | Markdown Guide - Google Chrome
@@ -53,8 +53,7 @@ window_id        window_name
 ```
 In this case **ID** of **Cyber Station Manager** will be **590570**
 
-**In Build version**
-Command:
+**In Build version** Command:
 ```bash
 > .\main.exe --windows-list
 ```
@@ -76,11 +75,11 @@ In this case **ID** of **Cyber Station Manager** will be **525820**
 
 Command for display current settings:
 ```bash
-$ python ./main.py --display-settings
+> python ./main.py --display-settings
 ```
 Example output:
 ```bash
-$ python ./main.py --display-settings
+> python ./main.py --display-settings
 
 Current settings:
 
@@ -145,4 +144,3 @@ Current settings:
 ```
 
 Detailed information about the settings [HERE](https://todo.com).
-

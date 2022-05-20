@@ -101,6 +101,6 @@ def test_class_variables() -> None:
 def test_display_settings_successful(capsys: Any) -> None:
     s = Settings()
     s.display_settings()
-    out, err = capsys.readouterr()
+    out, _ = capsys.readouterr()
     variable_keys = s._class_variables().keys()
     assert all(variable_key in out for variable_key in variable_keys)
