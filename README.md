@@ -7,6 +7,8 @@
 [![GitHub commits since latest release (by SemVer including pre-releases)](https://img.shields.io/github/commits-since/ihor-voronin/csm_parser/latest?include_prereleases&logo=github)](https://github.com/ihor-voronin/csm_parser/releases/latest)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ihor-voronin/csm_parser/CodeQL?label=checks&logo=github)](https://github.com/ihor-voronin/csm_parser/blob/master/.github/workflows/codeql.yml)
 ![Code platform](https://img.shields.io/badge/platform-windows-blue?logo=windows)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/0f4fe4e481354b2ab38e2d3385587821)](https://www.codacy.com/gh/ihor-voronin/csm_parser/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ihor-voronin/csm_parser&amp;utm_campaign=Badge_Grade)
+[![Libraries.io dependency status for GitHub repo](http://144.217.6.255/librariesio/github/ihor-voronin/csm_parser?logo=python&logoColor=ef8336)](https://libraries.io/github/ihor-voronin/csm_parser)
 
 ## Install dev version
 
