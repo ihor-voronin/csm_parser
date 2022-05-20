@@ -48,6 +48,10 @@ class Settings:
     database_user = "root"
     database_password = "uberpass"
 
+    # group service
+    service_name = "MySQL"
+    service_status_running = 4
+
     # group csv
     csv_output_file_name = "output.csv"
     csv_num_column = "num"
