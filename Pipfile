@@ -15,12 +15,12 @@ mysql = "*"
 pymysql = "*"
 
 [dev-packages]
-black = "*"
-mypy = "*"
-isort = "*"
-pre-commit = "*"
-types-requests = "*"
-bumpversion = "*"
+black = "==22.3.0"
+mypy = "==0.950"
+isort = "==5.10.1"
+pre-commit = "==2.19.0"
+types-requests = "==2.27.27"
+bumpversion = "==0.6.0"
 
 [requires]
 python_version = "3.10"
