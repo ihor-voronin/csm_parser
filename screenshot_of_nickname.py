@@ -99,7 +99,7 @@ def generate_screenshots(window_id: int) -> None:
     )
 
     count_of_pages = Settings.page_count
-    progress_bar(0, count_of_pages, prefix="Progress:", suffix="Complete", length=50)
+    progress_bar(0, count_of_pages)
 
     for page_mun in range(count_of_pages - 1):
         # click to reset pgdn position
@@ -127,9 +127,7 @@ def generate_screenshots(window_id: int) -> None:
         nickname_by_pgdn=nickname_by_pgdn,
         count_nickname_after_pgdn=count_nickname_after_pgdn_in_last_page,
     )
-    progress_bar(
-        count_of_pages, count_of_pages, prefix="Progress:", suffix="Complete", length=50
-    )
+    progress_bar(count_of_pages, count_of_pages)
 
 
 def create_screenshots_of_nicknames(window_id: int) -> None:

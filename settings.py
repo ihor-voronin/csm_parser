@@ -2,6 +2,9 @@ import json
 import tempfile
 from os import environ
 from os.path import join
+from typing import List
+
+from templates import load_templates
 
 
 class Settings:
@@ -41,6 +44,7 @@ class Settings:
     templates_is_local = False
     templates_url = "https://raw.githubusercontent.com/ihor-voronin/csm_parser/master/templates.json"
     templates_local_file = "templates.json"
+    _templates_loaded = None
 
     # group database
     database_host = "localhost"
@@ -114,3 +118,9 @@ class Settings:
     def load_from_file(cls, filename: str) -> None:
         with open(filename, "r") as file:
             cls.load_from_string(file.read())
+
+    @classmethod
+    def get_templates(cls) -> List[dict]:
+        if cls._templates_loaded is None:
+            cls._templates_loaded = load_templates()
+        return cls._templates_loaded

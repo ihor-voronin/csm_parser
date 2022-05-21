@@ -10,12 +10,8 @@ def clean_folders() -> None:
         Settings.get_save_screenshot_path(),
         Settings.get_save_processed_path(),
     ]
-    progress_bar(
-        0, len(image_folders), prefix="Progress:", suffix="Complete", length=50
-    )
+    progress_bar(0, len(image_folders))
     for num, image_folder in enumerate(image_folders, start=1):
         delete_folder(image_folder)
-        progress_bar(
-            num, len(image_folders), prefix="Progress:", suffix="Complete", length=50
-        )
+        progress_bar(num, len(image_folders))
     print("All used folders removed.")

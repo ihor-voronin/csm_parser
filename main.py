@@ -1,11 +1,11 @@
 import argparse
 
-from image_processing.recognize_from_templates import recognize_from_templates
 from msql import select_money
 from nickname_recognize import prepare_nicknames
 from os_interaction import clean_folders
 from screenshot_of_nickname import create_screenshots_of_nicknames
 from settings import Settings
+from templates import recognize_images_from_folder
 from window_control import get_window_id_from_opened_windows
 
 __version__ = "V1.0.0"
@@ -45,7 +45,7 @@ def main() -> None:
         prepare_nicknames()
 
     if args.recognize_templates or all_methods:
-        nicknames = recognize_from_templates()
+        nicknames = recognize_images_from_folder(Settings.get_save_processed_path())
         remain_money = select_money()
         write_nicknames_to_csv(nicknames, remain_money=remain_money)
 

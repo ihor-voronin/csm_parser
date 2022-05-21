@@ -72,11 +72,9 @@ def prepare_nicknames() -> None:
 
     count_images = len(files)
 
-    progress_bar(0, count_images, prefix="Progress:", suffix="Complete", length=50)
+    progress_bar(0, count_images)
     for image_num, base_image_name in enumerate(files, start=1):
-        progress_bar(
-            image_num, count_images, prefix="Progress:", suffix="Complete", length=50
-        )
+        progress_bar(image_num, count_images)
         image_path, image_name = crop_base_image(base_image_path, base_image_name)
         image_path, image_name = otsu_threshold(image_path, image_name)
         image_path, image_name = crop_free_space(image_path, image_name)
