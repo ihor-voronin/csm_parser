@@ -1,5 +1,4 @@
 import json
-import tempfile
 from os import environ
 from os.path import join
 from typing import List
@@ -29,14 +28,13 @@ class Settings:
     # group Folder
     _user_picture_path = join(environ["USERPROFILE"], "Pictures")
     _user_documents_path = join(environ["USERPROFILE"], "Documents")
-    _user_temp_path = tempfile.gettempdir()
 
     folder_save_screenshot = "CSM_parser_screenshot"
     folder_save_processed = "CSM_parser_processed"
     folder_save_temp = "CSM_parser_temp"
 
     # group NamePattern
-    name_pattern = "CSM-{name}-{timestamp}"
+    name_pattern = "CSM-{name}"
 
     # group_templates
     templates_is_local = False
@@ -49,10 +47,12 @@ class Settings:
     database_database = "ddm"
     database_user = "root"
     database_password = "uberpass"
+    database_select_database = (
+        "test"  # todo: https://github.com/ihor-voronin/csm_parser/issues/13
+    )
 
     # group service
     service_name = "MySQL"
-    service_status_running = 4
 
     # group csv
     csv_output_file_name = "output_{timestamp}.csv"
@@ -64,10 +64,6 @@ class Settings:
     @classmethod
     def get_save_screenshot_path(cls) -> str:
         return join(cls._user_picture_path, cls.folder_save_screenshot)
-
-    @classmethod
-    def get_temp_path(cls) -> str:
-        return join(cls._user_temp_path, cls.folder_save_temp)
 
     @classmethod
     def get_save_processed_path(cls) -> str:

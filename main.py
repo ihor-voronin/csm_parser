@@ -1,7 +1,7 @@
 import argparse
 
 from image_processing import prepare_images_for_recognize
-from msql import select_money
+from mysql import select_balance
 from os_interaction import clean_folders
 from screenshot_of_nickname import create_screenshots_of_nicknames
 from settings import Settings
@@ -34,6 +34,9 @@ def main() -> None:
     if args.display_settings:
         Settings.display_settings()
 
+    if args.clean or all_methods:
+        clean_folders()
+
     window_id = args.screenshot_generation
     if args.window_id or all_methods:
         window_id = get_window_id_from_opened_windows()
@@ -46,11 +49,8 @@ def main() -> None:
 
     if args.recognize_templates or all_methods:
         nicknames = recognize_images_from_folder(Settings.get_save_processed_path())
-        remain_money = select_money()
+        remain_money = select_balance()
         write_nicknames_to_csv(nicknames, remain_money=remain_money)
-
-    if args.clean or all_methods:
-        clean_folders()
 
 
 if __name__ == "__main__":

@@ -7,7 +7,6 @@ from .folders import delete_folder
 def clean_folders() -> None:
     print("Delete folders with images ...")
     image_folders = [
-        Settings.get_temp_path(),
         Settings.get_save_screenshot_path(),
         Settings.get_save_processed_path(),
     ]
