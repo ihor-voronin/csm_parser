@@ -1,5 +1,3 @@
-import os
-import shutil
 from typing import Tuple
 
 import cv2
@@ -7,6 +5,7 @@ import cv2
 from image_processing.load_image import load_image
 from image_processing.save_image import save_cv2_image, save_image
 from image_processing.transform_image import crop, crop_by_solid_color
+from os_interaction import copy_folder, delete_folder, file_list, is_folder_exist
 from progress_bar import progress_bar
 from settings import Settings
 
@@ -15,18 +14,6 @@ def get_accurate_result(res1: str, res2: str) -> str:
     if any(i in ". ()[]\\/" for i in res2):
         return res1
     return res2
-
-
-def copy_to_result_folder(source_folder: str, destination_folder: str) -> None:
-    if not os.path.exists(destination_folder):
-        os.makedirs(destination_folder)
-    for file_name in os.listdir(source_folder):
-        # construct full file path
-        source = f"{source_folder}\\{file_name}"
-        destination = f"{destination_folder}\\{file_name}"
-        # copy only files
-        if os.path.isfile(source):
-            shutil.copy(source, destination)
 
 
 def crop_free_space(image_folder: str, file_name: str) -> Tuple[str, str]:
@@ -79,12 +66,9 @@ def prepare_nicknames() -> None:
     print("Prepare nicknames for recognizing")
     base_image_path = Settings.get_save_screenshot_path()
     # create folder if not exists
-    if not os.path.exists(base_image_path):
-        raise Exception(f"Folder {base_image_path} does not exist")
+    is_folder_exist(base_image_path, raise_exception=True)
 
-    files = os.listdir(base_image_path)
-    if not files:
-        raise Exception(f"Folder {base_image_path} empty")
+    files = file_list(base_image_path, raise_exception=True)
 
     count_images = len(files)
 
@@ -99,9 +83,7 @@ def prepare_nicknames() -> None:
 
     pre_processing_path = Settings.get_temp_path()
     print(f"Move prepared images to {Settings.get_save_processed_path()} ...")
-    copy_to_result_folder(
-        f"{pre_processing_path}\\crop", Settings.get_save_processed_path()
-    )
+    copy_folder(f"{pre_processing_path}\\crop", Settings.get_save_processed_path())
     print(f"{count_images} image prepared for recognising.")
     # remove folder with temp images
-    shutil.rmtree(pre_processing_path)
+    delete_folder(pre_processing_path)

@@ -1,9 +1,8 @@
-import os
-
 from PIL import Image
 
 from image_processing.save_image import save_image
 from image_processing.transform_image import crop
+from os_interaction import create_folder
 from progress_bar import progress_bar
 from settings import Settings
 from window_controll.screen_shot import screen_shoot
@@ -20,8 +19,7 @@ def split_screenshot_to_nicknames(
     image: Image.Image, count: int, start_y: int, name_index_start: int = 0
 ) -> None:
     save_folder = Settings.get_save_screenshot_path()
-    if not os.path.exists(save_folder):
-        os.makedirs(save_folder)
+    create_folder(save_folder)
     for image_num in range(count):
         nickname_image = crop(
             image,

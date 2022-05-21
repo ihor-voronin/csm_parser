@@ -1,5 +1,4 @@
-import shutil
-
+from os_interaction import delete_folder
 from progress_bar import progress_bar
 from settings import Settings
 
@@ -15,10 +14,7 @@ def clean_folders() -> None:
         0, len(image_folders), prefix="Progress:", suffix="Complete", length=50
     )
     for num, image_folder in enumerate(image_folders, start=1):
-        try:
-            shutil.rmtree(image_folder)
-        except FileNotFoundError:
-            pass
+        delete_folder(image_folder)
         progress_bar(
             num, len(image_folders), prefix="Progress:", suffix="Complete", length=50
         )

@@ -1,0 +1,25 @@
+import os
+import shutil
+
+
+def is_folder_exist(folder_path: str, raise_exception: bool = False) -> bool:
+    is_exist = os.path.exists(folder_path)
+    if is_exist:
+        return True
+    if raise_exception and not is_exist:
+        raise LookupError(f"Folder {folder_path} does not exist")
+    return False
+
+
+def create_folder(folder_path: str, override_folder: bool = False) -> None:
+    if not is_folder_exist(folder_path):
+        if override_folder:
+            shutil.rmtree(folder_path)
+        else:
+            return None
+    os.makedirs(folder_path)
+
+
+def delete_folder(folder_path: str) -> None:
+    if is_folder_exist(folder_path):
+        shutil.rmtree(folder_path)
