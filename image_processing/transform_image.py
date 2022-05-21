@@ -1,4 +1,4 @@
-from PIL import Image, ImageChops, ImageOps
+from PIL import Image, ImageOps
 
 
 def crop(image: Image.Image, x: int, y: int, width: int, height: int) -> Image.Image:
@@ -17,16 +17,6 @@ def resize(image: Image.Image, height: int) -> Image.Image:
     height_percent = height / float(image.size[1])
     width_size = int((float(image.size[0]) * float(height_percent)))
     return image.resize((width_size, height))
-
-
-def crop_by_solid_color(image: Image.Image, color: int) -> Image.Image:
-    bg = Image.new(image.mode, image.size, color)
-    diff = ImageChops.difference(image, bg)
-    diff = ImageChops.add(diff, diff, 2.0, -100)
-    bbox = diff.getbbox()
-    if bbox:
-        return image.crop(bbox)
-    return image
 
 
 def expand(image: Image.Image, color: int, border_size: int) -> Image.Image:

@@ -4,8 +4,6 @@ from os import environ
 from os.path import join
 from typing import List
 
-from templates import load_templates
-
 
 class Settings:
     # group WindowConfig
@@ -57,7 +55,7 @@ class Settings:
     service_status_running = 4
 
     # group csv
-    csv_output_file_name = "output.csv"
+    csv_output_file_name = "output_{timestamp}.csv"
     csv_num_column = "num"
     csv_file_name_column = "file_name"
     csv_nickname_column = "nickname"
@@ -122,5 +120,13 @@ class Settings:
     @classmethod
     def get_templates(cls) -> List[dict]:
         if cls._templates_loaded is None:
-            cls._templates_loaded = load_templates()
+            if cls.templates_is_local:
+                from templates import load_templates_from_local_file
+
+                cls._templates_loaded = load_templates_from_local_file(
+                    cls.templates_local_file
+                )
+            from templates import load_templates_from_network
+
+            cls._templates_loaded = load_templates_from_network(cls.templates_url)
         return cls._templates_loaded

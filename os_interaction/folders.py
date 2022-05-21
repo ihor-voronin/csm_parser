@@ -12,7 +12,7 @@ def is_folder_exist(folder_path: str, raise_exception: bool = False) -> bool:
 
 
 def create_folder(folder_path: str, override_folder: bool = False) -> None:
-    if not is_folder_exist(folder_path):
+    if is_folder_exist(folder_path):
         if override_folder:
             shutil.rmtree(folder_path)
         else:

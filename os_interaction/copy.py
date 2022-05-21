@@ -1,6 +1,6 @@
 import shutil
 
-from os_interaction import create_folder, is_folder_exist
+from .folders import create_folder, is_folder_exist
 
 
 def copy_folder(source_folder: str, destination_folder: str) -> None:

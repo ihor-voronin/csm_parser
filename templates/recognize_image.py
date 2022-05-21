@@ -2,12 +2,12 @@ from typing import Any, Dict, List
 
 from PIL import Image
 
-from image_processing.load_image import load_image
-from image_processing.split_image_into_letters import split_image_into_letter
+from image_processing import load_image, split_image_into_letter
 from os_interaction import file_list
 from progress_bar import progress_bar
 from settings import Settings
-from templates import recognize_letter_from_image
+
+from .recognize_letter import recognize_letter_from_image
 
 
 def recognize_image(image: Image.Image) -> str:

@@ -60,12 +60,9 @@ def select_money() -> Dict[int, float]:
         cursor.execute(sql_select_query)
         # get all records
         records = cursor.fetchall()
-        # print("Total number of rows in table: ", cursor.rowcount)
 
         for num, row in enumerate(records, start=1):
             result.update({num: float(row[1])})
-            # print("UserId = ", row[0], )
-            # print("RemainMoney = ", row[1], "\n")
 
     except pymysql.connect.Error as e:
         print("Error reading data from MySQL table", e)

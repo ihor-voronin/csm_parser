@@ -1,7 +1,7 @@
 import argparse
 
+from image_processing import prepare_images_for_recognize
 from msql import select_money
-from nickname_recognize import prepare_nicknames
 from os_interaction import clean_folders
 from screenshot_of_nickname import create_screenshots_of_nicknames
 from settings import Settings
@@ -42,7 +42,7 @@ def main() -> None:
         create_screenshots_of_nicknames(window_id)
 
     if args.prepare_nicknames or all_methods:
-        prepare_nicknames()
+        prepare_images_for_recognize()
 
     if args.recognize_templates or all_methods:
         nicknames = recognize_images_from_folder(Settings.get_save_processed_path())

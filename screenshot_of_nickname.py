@@ -1,7 +1,6 @@
 from PIL import Image
 
-from image_processing.save_image import save_image
-from image_processing.transform_image import crop
+from image_processing import crop, save_image
 from os_interaction import create_folder
 from progress_bar import progress_bar
 from settings import Settings

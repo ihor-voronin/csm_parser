@@ -1,6 +1,7 @@
-from os_interaction import delete_folder
 from progress_bar import progress_bar
 from settings import Settings
+
+from .folders import delete_folder
 
 
 def clean_folders() -> None:
