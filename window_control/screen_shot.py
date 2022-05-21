@@ -6,8 +6,7 @@ import win32ui
 from PIL import Image
 
 
-def screen_shoot(window_id: int) -> Optional[Image.Image]:
-    # get dimensions of window
+def make_screen_shoot(window_id: int) -> Optional[Image.Image]:
     left, top, right, bot = win32gui.GetWindowRect(window_id)
     w = right - left
     h = bot - top

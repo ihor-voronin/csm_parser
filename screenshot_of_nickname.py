@@ -5,9 +5,9 @@ from image_processing.transform_image import crop
 from os_interaction import create_folder
 from progress_bar import progress_bar
 from settings import Settings
-from window_controll.screen_shot import screen_shoot
-from window_controll.window_control import (
+from window_control import (
     click,
+    make_screen_shoot,
     maximize_window,
     minimize_window,
     page_down,
@@ -52,7 +52,7 @@ def process_page(
 
     for step_by_page in range(full_pgdn_in_page):
         # take screen of window
-        screen = screen_shoot(window_id=window_id)
+        screen = make_screen_shoot(window_id=window_id)
         # split and save images
         split_screenshot_to_nicknames(
             image=screen,
@@ -64,7 +64,7 @@ def process_page(
         page_down()
 
     # last nicknames in page
-    screen = screen_shoot(window_id=window_id)
+    screen = make_screen_shoot(window_id=window_id)
     # print(
     #     f"count_nickname_after_pgdn: {count_nickname_after_pgdn} \n"
     #     f"nickname_by_pgdn: {nickname_by_pgdn} \n"

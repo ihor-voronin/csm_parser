@@ -1,12 +1,12 @@
 import argparse
 
-from delete_folders import clean_folders
 from image_processing.recognize_from_templates import recognize_from_templates
 from msql import select_money
 from nickname_recognize import prepare_nicknames
+from os_interaction import clean_folders
 from screenshot_of_nickname import create_screenshots_of_nicknames
 from settings import Settings
-from window_controll.window_list import get_window_id_from_opened_windows
+from window_control import get_window_id_from_opened_windows
 
 __version__ = "V1.0.0"
 
