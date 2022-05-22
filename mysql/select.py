@@ -18,14 +18,16 @@ def select_balance() -> Dict[int, float]:
             password=Settings.database_password,
         )
 
-        sql_select_query = f"""
+        sql_select_query = """
         SELECT `RemainMoney` 
-        FROM `{Settings.database_select_database}`.`usertb` 
+        FROM `{select_database}`.`usertb` 
         WHERE `EIType` = '1' 
         AND `UserType` NOT IN ('4', '13', '14', '15') 
         AND `Status` = '1' 
         ORDER BY `UserId` DESC
-        """
+        """.format(
+            select_database=Settings.database_select_database
+        )
         cursor = connection.cursor()
         cursor.execute(sql_select_query)
         # get all records
