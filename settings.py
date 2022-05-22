@@ -128,3 +128,13 @@ class Settings:
 
             cls._templates_loaded = load_templates_from_network(cls.templates_url)
         return cls._templates_loaded
+
+    @classmethod
+    def validate_settings(cls) -> None:
+        for key, val in cls._annotated_variables().items():
+            if not isinstance(getattr(cls, key), (val,)):
+                raise TypeError(f"Incorrect value type for key '{key}' or not set")
+
+        for key, val in cls._class_variables().items():
+            if not isinstance(getattr(cls, key), (type(val),)):
+                raise TypeError(f"Incorrect value type for key '{key}' or not set")

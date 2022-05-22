@@ -34,6 +34,8 @@ def main() -> None:
     if args.display_settings:
         Settings.display_settings()
 
+    Settings.validate_settings()
+
     if args.clean or all_methods:
         clean_folders()
 
