@@ -1,7 +1,7 @@
 import json
 from os import environ
 from os.path import join
-from typing import List
+from typing import Any, Dict, List
 
 
 class Settings:
@@ -11,48 +11,47 @@ class Settings:
 
     window_width = 1200
     window_height = 700
-    window_name = "Cyber Station Manager"
+    window_name: str = "Cyber Station Manager"
 
     # group PgDn config
     PgDn_contain_nickname = 13
 
     # group Nickname Page
-    page_count = 16
+    page_count: int = None  # type: ignore
     page_start_coordinate_nickname_x = 13
     page_start_coordinate_nickname_y = 255
     page_nickname_width = 600
     page_nickname_height = 28
     page_nickname_count = 200
-    page_last_nickname_count = 48
+    page_last_nickname_count: int = None  # type: ignore
 
     # group Folder
-    _user_picture_path = join(environ["USERPROFILE"], "Pictures")
-    _user_documents_path = join(environ["USERPROFILE"], "Documents")
+    picture_path: str = join(environ["USERPROFILE"], "Pictures")
+    documents_path: str = join(environ["USERPROFILE"], "Documents")
 
-    folder_save_screenshot = "CSM_parser_screenshot"
-    folder_save_processed = "CSM_parser_processed"
-    folder_save_temp = "CSM_parser_temp"
+    folder_save_screenshot: str = "CSM_parser_screenshot"
+    folder_save_processed: str = "CSM_parser_processed"
 
     # group NamePattern
-    name_pattern = "CSM-{name}"
+    name_pattern: str = "CSM-{name}"
 
     # group_templates
-    templates_is_local = False
+    templates_is_local: bool = False
     templates_url = "https://raw.githubusercontent.com/ihor-voronin/csm_parser/master/templates.json"
-    templates_local_file = "templates.json"
+    templates_local_file: str = "templates.json"
     _templates_loaded = None
 
     # group database
-    database_host = "localhost"
-    database_database = "test"
-    database_user = "root"
-    database_password = "uberpass"
+    database_host: str = "localhost"
+    database_database: str = "test"
+    database_user: str = "root"
+    database_password: str = None  # type: ignore
 
     # group service
-    service_name = "MySQL"
+    service_name: str = "MySQL"
 
     # group csv
-    csv_output_file_name = "output_{timestamp}.csv"
+    csv_output_file_name: str = "output_{timestamp}.csv"
     csv_num_column = "num"
     csv_file_name_column = "file_name"
     csv_nickname_column = "nickname"
@@ -60,16 +59,15 @@ class Settings:
 
     @classmethod
     def get_save_screenshot_path(cls) -> str:
-        return join(cls._user_picture_path, cls.folder_save_screenshot)
+        return join(cls.picture_path, cls.folder_save_screenshot)
 
     @classmethod
     def get_save_processed_path(cls) -> str:
-        return join(cls._user_picture_path, cls.folder_save_processed)
+        return join(cls.picture_path, cls.folder_save_processed)
 
     @classmethod
-    def get_save_csv_path(cls) -> str:
-        # todo: ~/Documents or from settings var
-        return cls._user_documents_path
+    def _annotated_variables(cls) -> Dict[str, Any]:
+        return cls.__annotations__
 
     @classmethod
     def _class_variables(cls) -> dict:
@@ -86,7 +84,11 @@ class Settings:
         print(
             f"""\nCurrent settings:
             \n{json.dumps(
-                cls._class_variables(),
+                {
+                    key: value 
+                    for key, value in cls._class_variables().items() 
+                    if key in cls._annotated_variables().keys()
+                },
                 sort_keys=True,
                 indent=4,
             )}\n
@@ -95,12 +97,15 @@ class Settings:
 
     @classmethod
     def load_from_string(cls, settings_string: str) -> None:
-        payload_dict = json.loads(settings_string)
-        class_variables = cls._class_variables()
+        try:
+            payload_dict = json.loads(settings_string)
+        except (TypeError, json.JSONDecodeError):
+            raise AttributeError("Incorrect format of settings")
+        class_variables = cls._annotated_variables()
         for key, value in payload_dict.items():
             if key not in class_variables.keys():
-                raise AttributeError(f"Incorrect key '{key}'")
-            if not isinstance(value, type(class_variables[key])):
+                continue
+            if not isinstance(value, (class_variables[key],)):
                 raise TypeError(f"Incorrect value type for key '{key}'")
             setattr(cls, key, value)
         print(f"New settings for {list(payload_dict.keys())} applied.")
