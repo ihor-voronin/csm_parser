@@ -44,12 +44,9 @@ class Settings:
 
     # group database
     database_host = "localhost"
-    database_database = "ddm"
+    database_database = "test"
     database_user = "root"
     database_password = "uberpass"
-    database_select_database = (
-        "test"  # todo: https://github.com/ihor-voronin/csm_parser/issues/13
-    )
 
     # group service
     service_name = "MySQL"
