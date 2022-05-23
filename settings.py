@@ -88,7 +88,11 @@ class Settings:
             if not isinstance(value, (class_variables[key],)):
                 raise TypeError(f"Incorrect value type for key '{key}'")
             setattr(cls, key, value)
-        print(f"New settings for {list(payload_dict.keys())} applied.")
+        print(
+            f"New settings for "
+            f"{[ key for key in payload_dict.keys() if key in class_variables.keys()]} "
+            f"applied."
+        )
 
     @classmethod
     def _setting_for_display(cls) -> dict:
