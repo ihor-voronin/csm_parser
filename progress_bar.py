@@ -1,10 +1,10 @@
 def progress_bar(
     iteration: int,
     total: int,
-    prefix: str = "",
-    suffix: str = "",
+    prefix: str = "Progress:",
+    suffix: str = "Complete",
     decimals: int = 1,
-    length: int = 100,
+    length: int = 50,
     fill: str = "█",
     print_end: str = "\r",
 ) -> None:

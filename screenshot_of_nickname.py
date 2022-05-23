@@ -1,14 +1,12 @@
-import os
-
 from PIL import Image
 
-from image_processing.save_image import save_image
-from image_processing.transform_image import crop
+from image_processing import crop, save_image
+from os_interaction import create_folder
 from progress_bar import progress_bar
 from settings import Settings
-from window_controll.screen_shot import screen_shoot
-from window_controll.window_control import (
+from window_control import (
     click,
+    make_screen_shoot,
     maximize_window,
     minimize_window,
     page_down,
@@ -20,8 +18,7 @@ def split_screenshot_to_nicknames(
     image: Image.Image, count: int, start_y: int, name_index_start: int = 0
 ) -> None:
     save_folder = Settings.get_save_screenshot_path()
-    if not os.path.exists(save_folder):
-        os.makedirs(save_folder)
+    create_folder(save_folder)
     for image_num in range(count):
         nickname_image = crop(
             image,
@@ -54,7 +51,7 @@ def process_page(
 
     for step_by_page in range(full_pgdn_in_page):
         # take screen of window
-        screen = screen_shoot(window_id=window_id)
+        screen = make_screen_shoot(window_id=window_id)
         # split and save images
         split_screenshot_to_nicknames(
             image=screen,
@@ -66,7 +63,7 @@ def process_page(
         page_down()
 
     # last nicknames in page
-    screen = screen_shoot(window_id=window_id)
+    screen = make_screen_shoot(window_id=window_id)
     # print(
     #     f"count_nickname_after_pgdn: {count_nickname_after_pgdn} \n"
     #     f"nickname_by_pgdn: {nickname_by_pgdn} \n"
@@ -101,7 +98,7 @@ def generate_screenshots(window_id: int) -> None:
     )
 
     count_of_pages = Settings.page_count
-    progress_bar(0, count_of_pages, prefix="Progress:", suffix="Complete", length=50)
+    progress_bar(0, count_of_pages)
 
     for page_mun in range(count_of_pages - 1):
         # click to reset pgdn position
@@ -129,9 +126,7 @@ def generate_screenshots(window_id: int) -> None:
         nickname_by_pgdn=nickname_by_pgdn,
         count_nickname_after_pgdn=count_nickname_after_pgdn_in_last_page,
     )
-    progress_bar(
-        count_of_pages, count_of_pages, prefix="Progress:", suffix="Complete", length=50
-    )
+    progress_bar(count_of_pages, count_of_pages)
 
 
 def create_screenshots_of_nicknames(window_id: int) -> None:

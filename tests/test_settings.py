@@ -68,11 +68,6 @@ def test_get_save_screenshot_path_successful() -> None:
     )
 
 
-def test_get_temp_path_successful() -> None:
-    s = Settings()
-    assert s.get_temp_path() == join(s._user_temp_path, s.folder_save_temp)
-
-
 def test_get_save_processed_path_successful() -> None:
     s = Settings()
     assert s.get_save_processed_path() == join(

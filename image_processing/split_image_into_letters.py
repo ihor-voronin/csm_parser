@@ -2,7 +2,8 @@ from typing import List
 
 from PIL import Image
 
-from image_processing.transform_image import crop, crop_by_solid_color
+from .crop_methods import crop_by_solid_color
+from .transform_image import crop
 
 
 def split_image_into_letter(image: Image.Image) -> List[Image.Image]:
@@ -52,7 +53,6 @@ def split_image_into_letter(image: Image.Image) -> List[Image.Image]:
         letter = crop(image, current_x, 0, end_letter_x + int(is_problem_split), height)
         letter = crop_by_solid_color(letter, color_black)
         letters.append(letter)
-        # letter.show()
 
         # remove letter and black border
         total_width = image.size[0]
@@ -62,6 +62,4 @@ def split_image_into_letter(image: Image.Image) -> List[Image.Image]:
 
         if end_letter_x == total_width:
             break
-        # image.show()
-        # break
     return letters

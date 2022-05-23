@@ -1,7 +1,7 @@
 import json
-import tempfile
 from os import environ
 from os.path import join
+from typing import List
 
 
 class Settings:
@@ -28,32 +28,31 @@ class Settings:
     # group Folder
     _user_picture_path = join(environ["USERPROFILE"], "Pictures")
     _user_documents_path = join(environ["USERPROFILE"], "Documents")
-    _user_temp_path = tempfile.gettempdir()
 
     folder_save_screenshot = "CSM_parser_screenshot"
     folder_save_processed = "CSM_parser_processed"
     folder_save_temp = "CSM_parser_temp"
 
     # group NamePattern
-    name_pattern = "CSM-{name}-{timestamp}"
+    name_pattern = "CSM-{name}"
 
     # group_templates
     templates_is_local = False
     templates_url = "https://raw.githubusercontent.com/ihor-voronin/csm_parser/master/templates.json"
     templates_local_file = "templates.json"
+    _templates_loaded = None
 
     # group database
     database_host = "localhost"
-    database_database = "ddm"
+    database_database = "test"
     database_user = "root"
     database_password = "uberpass"
 
     # group service
     service_name = "MySQL"
-    service_status_running = 4
 
     # group csv
-    csv_output_file_name = "output.csv"
+    csv_output_file_name = "output_{timestamp}.csv"
     csv_num_column = "num"
     csv_file_name_column = "file_name"
     csv_nickname_column = "nickname"
@@ -62,10 +61,6 @@ class Settings:
     @classmethod
     def get_save_screenshot_path(cls) -> str:
         return join(cls._user_picture_path, cls.folder_save_screenshot)
-
-    @classmethod
-    def get_temp_path(cls) -> str:
-        return join(cls._user_temp_path, cls.folder_save_temp)
 
     @classmethod
     def get_save_processed_path(cls) -> str:
@@ -114,3 +109,17 @@ class Settings:
     def load_from_file(cls, filename: str) -> None:
         with open(filename, "r") as file:
             cls.load_from_string(file.read())
+
+    @classmethod
+    def get_templates(cls) -> List[dict]:
+        if cls._templates_loaded is None:
+            if cls.templates_is_local:
+                from templates import load_templates_from_local_file
+
+                cls._templates_loaded = load_templates_from_local_file(
+                    cls.templates_local_file
+                )
+            from templates import load_templates_from_network
+
+            cls._templates_loaded = load_templates_from_network(cls.templates_url)
+        return cls._templates_loaded

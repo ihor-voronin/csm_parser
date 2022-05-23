@@ -1,4 +1,5 @@
 import csv
+import time
 from os.path import join
 from typing import Any, Dict, List, Optional
 
@@ -15,7 +16,12 @@ def write_nicknames_to_csv(
         Settings.csv_balance_column,
     ]
 
-    file_path = join(Settings.get_save_csv_path(), Settings.csv_output_file_name)
+    file_name = Settings.csv_output_file_name.format(timestamp=int(time.time()))
+
+    file_path = join(
+        Settings.get_save_csv_path(),
+        file_name,
+    )
 
     try:
         with open(file_path, "w", encoding="utf8", newline="") as csvfile:
@@ -32,9 +38,6 @@ def write_nicknames_to_csv(
                         }
                     )
                 writer.writerow(dict_to_write)
-            # writer.writerows(nicknames)
-        print(
-            f"File {Settings.csv_output_file_name} saved to {Settings.get_save_csv_path()}"
-        )
+        print(f"File {file_name} saved to {Settings.get_save_csv_path()}")
     except IOError:
         print("I/O error")

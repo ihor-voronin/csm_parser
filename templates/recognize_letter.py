@@ -12,7 +12,7 @@ def check_color(image: Image.Image, x: int, y: int, color: int) -> bool:
     return image.getpixel((x, y)) == color
 
 
-def recognize_letter_from_template(letter: Image.Image, templates: List[dict]) -> str:
+def recognize_letter_from_image(letter: Image.Image, templates: List[dict]) -> str:
     width, height = letter.size
     filtered_templates = [
         d
@@ -22,7 +22,7 @@ def recognize_letter_from_template(letter: Image.Image, templates: List[dict]) -
             and height - 1 <= d["height"] <= height + 1
         )
     ]
-    symbol = "?"
+    symbol = "?"  # todo: to settings as default unknown symbol
 
     for template in filtered_templates:
         white_points = template["white_points"]
