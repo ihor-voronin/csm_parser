@@ -91,15 +91,19 @@ class Settings:
         print(f"New settings for {list(payload_dict.keys())} applied.")
 
     @classmethod
+    def _setting_for_display(cls) -> dict:
+        return {
+            key: value
+            for key, value in cls._class_variables().items()
+            if key in cls._annotated_variables().keys()
+        }
+
+    @classmethod
     def display_settings(cls) -> None:
         print(
             f"""\nCurrent settings:
             \n{json.dumps(
-                {
-                    key: value 
-                    for key, value in cls._class_variables().items() 
-                    if key in cls._annotated_variables().keys()
-                },
+                cls._setting_for_display(),
                 sort_keys=True,
                 indent=4,
             )}\n
