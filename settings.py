@@ -126,10 +126,12 @@ class Settings:
     @classmethod
     def load_from_non_default_args(cls, non_default_args: dict) -> None:
         for key in non_default_args.keys():
-            if cls._annotated_variables()[key] is int:
+            if cls._annotated_variables().get(key) is int:
                 non_default_args[key] = int(non_default_args[key])
-            if cls._annotated_variables()[key] is str:
+            if cls._annotated_variables().get(key) is str:
                 non_default_args[key] = str(non_default_args[key])
+            if cls._annotated_variables().get(key) is bool:
+                non_default_args[key] = bool(non_default_args[key])
         cls._load_from_dict(non_default_args)
 
     @classmethod
