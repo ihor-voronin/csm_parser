@@ -16,11 +16,11 @@ from write_nicknames import write_nicknames_to_csv
 def main() -> None:
     all_methods = False
     if (
-        vars(args)["window_id"] is False
-        and vars(args)["prepare_nicknames"] is False
-        and vars(args)["recognize_templates"] is False
-        and vars(args)["screenshot_generation"] is None
-        and vars(args)["clean"] is False
+        config["window_id"] is False
+        and config["prepare_nicknames"] is False
+        and config["recognize_templates"] is False
+        and config["screenshot_generation"] is None
+        and config["clean"] is False
     ):
         print("all methods activated step by step")
         all_methods = True
@@ -31,10 +31,13 @@ def main() -> None:
     if args.load_file:
         Settings.load_from_file(args.load_file)
 
-    if args.display_settings:
-        Settings.display_settings()
+    Settings.load_from_non_default_args(non_default_config)
 
-    Settings.validate_settings()
+    Settings.display_settings()
+    try:
+        Settings.validate_settings()
+    except AttributeError:
+        return None
 
     if args.clean or all_methods:
         clean_folders()
@@ -59,12 +62,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="user converter",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    parser.add_argument(
-        "-ds",
-        "--display-settings",
-        help="Display current settings params",
-        action="store_true",
     )
     parser.add_argument(
         "-lf",
@@ -104,7 +101,12 @@ if __name__ == "__main__":
     )
     parser.add_argument("-c", "--clean", action="store_true", help="Clean used folders")
 
-    args = parser.parse_args()
-    # config = vars(args)
-    # print(config)
+    args, unknown = parser.parse_known_args()
+    config = vars(args)
+    non_default_config = {
+        unknown[i].strip("--"): unknown[i + 1]
+        for i in range(0, len(unknown), 1)
+        if unknown[i].startswith("--")
+        and not (unknown[i + 1 : i + 2] + ["--"])[0].startswith("--")
+    }
     main()

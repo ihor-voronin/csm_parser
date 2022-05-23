@@ -80,6 +80,17 @@ class Settings:
         }
 
     @classmethod
+    def _load_from_dict(cls, payload_dict: dict) -> None:
+        class_variables = cls._annotated_variables()
+        for key, value in payload_dict.items():
+            if key not in class_variables.keys():
+                continue
+            if not isinstance(value, (class_variables[key],)):
+                raise TypeError(f"Incorrect value type for key '{key}'")
+            setattr(cls, key, value)
+        print(f"New settings for {list(payload_dict.keys())} applied.")
+
+    @classmethod
     def display_settings(cls) -> None:
         print(
             f"""\nCurrent settings:
@@ -101,19 +112,21 @@ class Settings:
             payload_dict = json.loads(settings_string)
         except (TypeError, json.JSONDecodeError):
             raise AttributeError("Incorrect format of settings")
-        class_variables = cls._annotated_variables()
-        for key, value in payload_dict.items():
-            if key not in class_variables.keys():
-                continue
-            if not isinstance(value, (class_variables[key],)):
-                raise TypeError(f"Incorrect value type for key '{key}'")
-            setattr(cls, key, value)
-        print(f"New settings for {list(payload_dict.keys())} applied.")
+        cls._load_from_dict(payload_dict)
 
     @classmethod
     def load_from_file(cls, filename: str) -> None:
         with open(filename, "r") as file:
             cls.load_from_string(file.read())
+
+    @classmethod
+    def load_from_non_default_args(cls, non_default_args: dict) -> None:
+        for key in non_default_args.keys():
+            if cls._annotated_variables()[key] is int:
+                non_default_args[key] = int(non_default_args[key])
+            if cls._annotated_variables()[key] is str:
+                non_default_args[key] = str(non_default_args[key])
+        cls._load_from_dict(non_default_args)
 
     @classmethod
     def get_templates(cls) -> List[dict]:
@@ -130,11 +143,17 @@ class Settings:
         return cls._templates_loaded
 
     @classmethod
-    def validate_settings(cls) -> None:
-        for key, val in cls._annotated_variables().items():
-            if not isinstance(getattr(cls, key), (val,)):
-                raise TypeError(f"Incorrect value type for key '{key}' or not set")
+    def _validate_settings(cls, validate_by: dict) -> None:
+        is_some_not_set = False
+        for key, val in validate_by.items():
+            _type = val if val in (int, str, bool) else type(val)
+            if not isinstance(getattr(cls, key), (_type,)):
+                print(f"Incorrect value type for key '{key}' or not set")
+                is_some_not_set = True
+        if is_some_not_set:
+            raise AttributeError("Not all required attributes applied")
 
-        for key, val in cls._class_variables().items():
-            if not isinstance(getattr(cls, key), (type(val),)):
-                raise TypeError(f"Incorrect value type for key '{key}' or not set")
+    @classmethod
+    def validate_settings(cls) -> None:
+        cls._validate_settings(cls._annotated_variables())
+        cls._validate_settings(cls._class_variables())
