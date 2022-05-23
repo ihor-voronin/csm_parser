@@ -39,8 +39,8 @@ def main() -> None:
     except AttributeError:
         return None
 
-    if args.clean or all_methods:
-        clean_folders()
+    # clean prev data
+    clean_folders()
 
     window_id = args.screenshot_generation
     if args.window_id or all_methods:
@@ -56,6 +56,9 @@ def main() -> None:
         nicknames = recognize_images_from_folder(Settings.get_save_processed_path())
         remain_money = select_balance()
         write_nicknames_to_csv(nicknames, remain_money=remain_money)
+
+    if args.clean or all_methods:
+        clean_folders()
 
 
 if __name__ == "__main__":
