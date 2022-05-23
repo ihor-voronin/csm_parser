@@ -19,7 +19,7 @@ def write_nicknames_to_csv(
     file_name = Settings.csv_output_file_name.format(timestamp=int(time.time()))
 
     file_path = join(
-        Settings.get_save_csv_path(),
+        Settings.documents_path,
         file_name,
     )
 
@@ -38,6 +38,6 @@ def write_nicknames_to_csv(
                         }
                     )
                 writer.writerow(dict_to_write)
-        print(f"File {file_name} saved to {Settings.get_save_csv_path()}")
+        print(f"File {file_name} saved to {Settings.documents_path}")
     except IOError:
         print("I/O error")
