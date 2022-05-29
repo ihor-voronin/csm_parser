@@ -2,6 +2,7 @@ import argparse
 
 from image_processing import prepare_images_for_recognize
 from mysql import select_balance
+from mysql.select import copy_database_content, delete_copied_database_content
 from os_interaction import clean_folders
 from screenshot_of_nickname import create_screenshots_of_nicknames
 from settings import Settings
@@ -54,7 +55,9 @@ def main() -> None:
 
     if args.recognize_templates or all_methods:
         nicknames = recognize_images_from_folder(Settings.get_save_processed_path())
+        copy_database_content()
         remain_money = select_balance()
+        delete_copied_database_content()
         write_nicknames_to_csv(nicknames, remain_money=remain_money)
 
     if args.clean or all_methods:

@@ -43,9 +43,12 @@ class Settings:
 
     # group database
     database_host: str = "localhost"
-    database_database: str = "test"
+    database_database: str = "csm_parser"
     database_user: str = "root"
     database_password: str = None  # type: ignore
+
+    current_folder = "data\ddm"
+    temp_folder = "data\csm_parser"
 
     # group service
     service_name: str = "MySQL"
