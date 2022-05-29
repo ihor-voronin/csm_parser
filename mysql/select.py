@@ -1,4 +1,3 @@
-import os
 import shutil
 import time
 from typing import Dict
@@ -10,13 +9,7 @@ from win32service import SERVICE_STOP_PENDING
 from os_interaction.folders import is_folder_exist
 from settings import Settings
 
-from .service import (
-    restart_service,
-    start_or_restart_service,
-    start_service,
-    status_service,
-    stop_service,
-)
+from .service import start_or_restart_service, status_service, stop_service
 
 
 def get_service_directory() -> str:
