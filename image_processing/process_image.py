@@ -1,3 +1,5 @@
+import logging
+
 from PIL import Image
 
 from os_interaction import file_list, is_folder_exist
@@ -16,12 +18,20 @@ def process_single_image(image: Image.Image) -> Image.Image:
 
 
 def prepare_images_for_recognize() -> None:
-    print("Prepare nicknames for recognizing")
+    logging.info("Prepare nicknames for recognizing")
     base_image_path = Settings.get_save_screenshot_path()
     # create folder if not exists
-    is_folder_exist(base_image_path, raise_exception=True)
+    try:
+        is_folder_exist(base_image_path, raise_exception=True)
+    except LookupError as e:
+        logging.error(str(e))
+        raise e
 
-    files = file_list(base_image_path, raise_exception=True)
+    try:
+        files = file_list(base_image_path, raise_exception=True)
+    except LookupError as e:
+        logging.error(str(e))
+        raise e
 
     count_images = len(files)
 
@@ -34,4 +44,4 @@ def prepare_images_for_recognize() -> None:
             base_image_name,
         )
 
-    print(f"{count_images} image prepared for recognising.")
+    logging.info(f"{count_images} image prepared for recognising.")

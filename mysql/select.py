@@ -1,9 +1,11 @@
+import logging
 import shutil
 import time
 from typing import Dict
 
 import psutil
 import pymysql
+import pywintypes
 from win32service import SERVICE_STOP_PENDING
 
 from os_interaction.folders import is_folder_exist
@@ -31,19 +33,29 @@ def temp_database_path() -> str:
 def copy_database_content() -> None:
     stop_service(Settings.service_name)
     shutil.copytree(current_database_path(), temp_database_path())
-    print("Database is already copied to csv_parser folder")
+    logging.info("Database is already copied to csv_parser folder")
     while status_service(Settings.service_name)[1] == SERVICE_STOP_PENDING:
         time.sleep(0.25)
 
 
 def delete_copied_database_content() -> None:
-    if is_folder_exist(temp_database_path()):
-        stop_service(Settings.service_name)
-        shutil.rmtree(temp_database_path())
+    try:
+        if is_folder_exist(temp_database_path()):
+            stop_service(Settings.service_name)
+            while status_service(Settings.service_name)[1] == SERVICE_STOP_PENDING:
+                time.sleep(0.25)
+            shutil.rmtree(temp_database_path())
+    except LookupError as e:
+        logging.error(str(e))
+        raise e
 
 
 def select_balance() -> Dict[int, float]:
-    start_or_restart_service(Settings.service_name)
+    try:
+        start_or_restart_service(Settings.service_name)
+    except pywintypes.error as exc:
+        logging.error(str(exc))
+        raise exc
     result = dict()
     try:
         connection = pymysql.connect(
@@ -69,7 +81,7 @@ def select_balance() -> Dict[int, float]:
             result.update({num: float(row[0])})
 
     except pymysql.connect.Error as e:
-        print("Error reading data from MySQL table", e)
+        logging.error("Error reading data from MySQL table", e)
         raise Exception("Cannot continue")
     finally:
         connection.close()

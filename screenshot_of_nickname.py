@@ -1,3 +1,5 @@
+import logging
+
 from PIL import Image
 
 from image_processing import crop, save_image
@@ -130,7 +132,7 @@ def generate_screenshots(window_id: int) -> None:
 
 
 def create_screenshots_of_nicknames(window_id: int) -> None:
-    print(
+    logging.info(
         """
 Start getting nicknames from the app.
 IMPORTANT!!!
@@ -139,7 +141,8 @@ Do not move the mouse cursor or click until the window is minimized
     )
     try:
         input("Press Enter to continue...")
-    except SyntaxError:
+    except SyntaxError as exc:
+        logging.error(str(exc))
         pass
     # set base position for correct processing
     maximize_window(window_id)
@@ -151,4 +154,4 @@ Do not move the mouse cursor or click until the window is minimized
     generate_screenshots(window_id)
 
     minimize_window(window_id)
-    print(f"Nicknames saved to {Settings.get_save_screenshot_path()}")
+    logging.info(f"Nicknames saved to {Settings.get_save_screenshot_path()}")
