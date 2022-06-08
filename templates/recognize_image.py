@@ -1,7 +1,7 @@
+import logging
 from typing import Any, Dict, List
 
 from PIL import Image
-import logging
 
 from image_processing import load_image, split_image_into_letter
 from os_interaction import file_list

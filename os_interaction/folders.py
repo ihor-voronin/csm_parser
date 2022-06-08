@@ -1,6 +1,7 @@
+import logging
 import os
 import shutil
-import logging
+
 
 def is_folder_exist(folder_path: str, raise_exception: bool = False) -> bool:
     is_exist = os.path.exists(folder_path)

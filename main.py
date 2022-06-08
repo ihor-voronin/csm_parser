@@ -18,7 +18,12 @@ from write_nicknames import write_nicknames_to_csv
 
 
 def main() -> None:
-    logging.basicConfig(filename=os.path.join(str(tempfile.gettempdir()), Settings._log_filename), level=logging.INFO, format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S',)
+    logging.basicConfig(
+        filename=os.path.join(str(tempfile.gettempdir()), Settings._log_filename),
+        level=logging.INFO,
+        format="%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+    )
     all_methods = False
     if (
         config["window_id"] is False

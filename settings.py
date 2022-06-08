@@ -50,7 +50,7 @@ class Settings:
 
     current_folder = "data\ddm"
     temp_folder = "data\csm_parser"
-    _log_filename = 'csm_parser'
+    _log_filename = "csm_parser"
 
     # group service
     service_name: str = "MySQL"

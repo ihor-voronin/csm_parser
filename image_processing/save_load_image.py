@@ -1,5 +1,5 @@
-import time
 import logging
+import time
 from typing import Tuple
 
 from PIL import Image, UnidentifiedImageError
