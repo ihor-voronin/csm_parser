@@ -1,4 +1,5 @@
 import json
+import logging
 from os import environ
 from os.path import join
 from typing import Any, Dict, List
@@ -49,6 +50,7 @@ class Settings:
 
     current_folder = "data\ddm"
     temp_folder = "data\csm_parser"
+    _log_filename = 'csm_parser'
 
     # group service
     service_name: str = "MySQL"
@@ -91,7 +93,7 @@ class Settings:
             if not isinstance(value, (class_variables[key],)):
                 raise TypeError(f"Incorrect value type for key '{key}'")
             setattr(cls, key, value)
-        print(
+        logging.info(
             f"New settings for "
             f"{[ key for key in payload_dict.keys() if key in class_variables.keys()]} "
             f"applied."
@@ -107,7 +109,7 @@ class Settings:
 
     @classmethod
     def display_settings(cls) -> None:
-        print(
+        logging.info(
             f"""\nCurrent settings:
             \n{json.dumps(
                 cls._setting_for_display(),
@@ -121,8 +123,9 @@ class Settings:
     def load_from_string(cls, settings_string: str) -> None:
         try:
             payload_dict = json.loads(settings_string)
-        except (TypeError, json.JSONDecodeError):
-            raise AttributeError("Incorrect format of settings")
+        except (TypeError, json.JSONDecodeError) as exc:
+            logging.error(str(exc))
+            raise TypeError("Incorrect format of settings")
         cls._load_from_dict(payload_dict)
 
     @classmethod
@@ -139,7 +142,11 @@ class Settings:
                 non_default_args[key] = str(non_default_args[key])
             if cls._annotated_variables().get(key) is bool:
                 non_default_args[key] = bool(non_default_args[key])
-        cls._load_from_dict(non_default_args)
+        try:
+            cls._load_from_dict(non_default_args)
+        except AttributeError as exc:
+            logging.error(str(exc))
+            raise exc
 
     @classmethod
     def get_templates(cls) -> List[dict]:
@@ -161,12 +168,16 @@ class Settings:
         for key, val in validate_by.items():
             _type = val if val in (int, str, bool) else type(val)
             if not isinstance(getattr(cls, key), (_type,)):
-                print(f"Incorrect value type for key '{key}' or not set")
+                logging.error(f"Incorrect value type for key '{key}' or not set")
                 is_some_not_set = True
         if is_some_not_set:
             raise AttributeError("Not all required attributes applied")
 
     @classmethod
     def validate_settings(cls) -> None:
-        cls._validate_settings(cls._annotated_variables())
-        cls._validate_settings(cls._class_variables())
+        try:
+            cls._validate_settings(cls._annotated_variables())
+            cls._validate_settings(cls._class_variables())
+        except AttributeError as exc:
+            logging.error(str(exc))
+            raise exc

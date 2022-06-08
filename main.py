@@ -1,4 +1,7 @@
 import argparse
+import logging
+import os
+import tempfile
 
 from image_processing import prepare_images_for_recognize
 from mysql import select_balance
@@ -15,6 +18,7 @@ from write_nicknames import write_nicknames_to_csv
 
 
 def main() -> None:
+    logging.basicConfig(filename=os.path.join(str(tempfile.gettempdir()), Settings._log_filename), level=logging.INFO, format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S',)
     all_methods = False
     if (
         config["window_id"] is False
@@ -23,7 +27,7 @@ def main() -> None:
         and config["screenshot_generation"] is None
         and config["clean"] is False
     ):
-        print("all methods activated step by step")
+        logging.info("all methods activated step by step")
         all_methods = True
 
     if args.load_settings:
@@ -45,7 +49,11 @@ def main() -> None:
 
     window_id = args.screenshot_generation
     if args.window_id or all_methods:
-        window_id = get_window_id_from_opened_windows()
+        try:
+            window_id = get_window_id_from_opened_windows()
+        except WindowsError as e:
+            logging.error(str(e))
+            raise e
 
     if args.screenshot_generation or all_methods:
         create_screenshots_of_nicknames(window_id)

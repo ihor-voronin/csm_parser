@@ -1,4 +1,5 @@
 import csv
+import logging
 import time
 from os.path import join
 from typing import Any, Dict, List, Optional
@@ -38,6 +39,6 @@ def write_nicknames_to_csv(
                         }
                     )
                 writer.writerow(dict_to_write)
-        print(f"File {file_name} saved to {Settings.documents_path}")
+        logging.info(f"File {file_name} saved to {Settings.documents_path}")
     except IOError:
-        print("I/O error")
+        logging.error("I/O error")

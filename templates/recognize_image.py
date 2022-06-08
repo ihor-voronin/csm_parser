@@ -1,6 +1,7 @@
 from typing import Any, Dict, List
 
 from PIL import Image
+import logging
 
 from image_processing import load_image, split_image_into_letter
 from os_interaction import file_list
@@ -21,7 +22,11 @@ def recognize_image(image: Image.Image) -> str:
 
 
 def recognize_images_from_folder(folder: str) -> List[Dict[str, Any]]:
-    image_names = file_list(folder)
+    try:
+        image_names = file_list(folder)
+    except LookupError as e:
+        logging.error(str(e))
+        raise e
 
     count_images = len(image_names)
     result = []

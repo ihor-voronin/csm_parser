@@ -1,3 +1,4 @@
+import logging
 import time
 from typing import Union
 
@@ -10,7 +11,7 @@ from settings import Settings
 
 
 def set_window_position(window_id: int) -> None:
-    print(
+    logging.info(
         f"Set window to position ({Settings.start_coordinate_x}, {Settings.start_coordinate_y})"
     )
     print(f"Set window resolution {Settings.window_width} X {Settings.window_height}")

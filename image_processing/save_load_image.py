@@ -1,4 +1,5 @@
 import time
+import logging
 from typing import Tuple
 
 from PIL import Image, UnidentifiedImageError
@@ -20,7 +21,11 @@ def save_image(image: Image.Image, save_folder: str, name: str) -> Tuple[str, st
             Settings.name_pattern.format(name=name, timestamp=int(time.time())) + ".png"
         )
     path = f"{save_folder}\\{name}"
-    if not is_folder_exist(save_folder):
-        create_folder(save_folder)
+    try:
+        if not is_folder_exist(save_folder):
+            create_folder(save_folder)
+    except LookupError as e:
+        logging.error(str(e))
+        raise e
     image.save(path)
     return save_folder, f"{name}"
