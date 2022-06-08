@@ -82,7 +82,6 @@ def select_balance() -> Dict[int, float]:
 
     except pymysql.connect.Error as e:
         logging.error("Error reading data from MySQL table", e)
-        logging.error(str(e))
         raise Exception("Cannot continue")
     finally:
         connection.close()
