@@ -4,3 +4,5 @@ settings.json
 .idea/
 #Environments
 venv/
+/csm_parser.spec
+/build/
