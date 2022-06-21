@@ -12,7 +12,7 @@ from settings import Settings
 from templates import recognize_images_from_folder
 from window_control import get_window_id_from_opened_windows
 
-__version__ = "V1.0.0"
+__version__ = "V2.0.0"
 
 from write_nicknames import write_nicknames_to_csv
 
